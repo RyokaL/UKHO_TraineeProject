@@ -40,3 +40,6 @@ steps:
     appType: 'webApp'
     WebAppName: 'calumdbtraineeproject'
     packageForLinux: '$(build.artifactStagingDirectory)'
+    enableCustomDeployment: true
+    DeploymentType: 'webDeploy'
+    RemoveAdditionalFilesFlag: true
