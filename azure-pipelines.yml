@@ -16,13 +16,6 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Visual Studio Enterprise Subscription(1)(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
-    appType: 'webApp'
-    WebAppName: 'calumdbtraineeproject'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 - task: NuGetCommand@2
   inputs:
@@ -39,3 +32,11 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Visual Studio Enterprise Subscription(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
+    appType: 'webApp'
+    WebAppName: 'calumdbtraineeproject'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
