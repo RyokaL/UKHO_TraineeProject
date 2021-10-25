@@ -39,6 +39,7 @@ steps:
     azureSubscription: 'Visual Studio Enterprise Subscription(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
     appType: 'webApp'
     WebAppName: 'calumdbtraineeproject'
-    packageForLinux: '$(build.artifactStagingDirectory)'
+    packageForLinux: '$(SYSTEM.ARTIFACTSDIRECTORY)/**/*.zip'
     enableCustomDeployment: true
-    DeploymentType: 'runFromZip'
+    DeploymentType: 'webDeploy'
+    RemoveAdditionalFilesFlag: true
