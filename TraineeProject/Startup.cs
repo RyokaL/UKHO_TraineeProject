@@ -69,6 +69,10 @@ namespace TraineeProject
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+                else
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }
