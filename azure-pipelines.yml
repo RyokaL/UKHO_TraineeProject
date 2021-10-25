@@ -21,17 +21,11 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/web_app'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
@@ -39,7 +33,7 @@ steps:
     azureSubscription: 'Visual Studio Enterprise Subscription(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
     appType: 'webApp'
     WebAppName: 'calumdbtraineeproject'
-    packageForLinux: '$(SYSTEM.ARTIFACTSDIRECTORY)/**/*.zip'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/web_app/*.zip'
     enableCustomDeployment: true
     DeploymentType: 'webDeploy'
     RemoveAdditionalFilesFlag: true
