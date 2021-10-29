@@ -1,6 +1,6 @@
 using System;
 
-namespace TraineeProject
+namespace TraineeProject.Models
 {
     public class WeatherForecast
     {
