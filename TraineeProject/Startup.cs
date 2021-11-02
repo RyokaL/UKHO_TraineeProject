@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TraineeProject.Controllers;
+using TraineeProject.Database.Interfaces;
 
 namespace TraineeProject
 {
@@ -25,6 +28,11 @@ namespace TraineeProject
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+
+            services.AddDbContext<IFFXIVLogContext, FFXIVLogContextEF>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("TraineeSQLDbLocal"));
             });
         }
 
