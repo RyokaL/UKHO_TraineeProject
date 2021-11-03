@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TraineeProject.Controllers;
-using TraineeProject.Database.Interfaces;
+using TraineeProject.Database;
 
 namespace TraineeProject
 {
@@ -23,16 +23,16 @@ namespace TraineeProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<LogContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("TraineeSQLDbLocal"));
+            });
+
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
-            });
-
-            services.AddDbContext<IFFXIVLogContext, FFXIVLogContextEF>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("TraineeSQLDbLocal"));
             });
         }
 

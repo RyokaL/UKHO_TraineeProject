@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace TraineeProject.Models
 {
-    public class CharacterFFXIV
+    public class Character
     {
         public int Id { get; set; }
         public string CharacterName { get; set; }
         public string WorldServer { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public bool Private { get; set; }
     }
 }
