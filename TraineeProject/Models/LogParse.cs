@@ -11,6 +11,7 @@ namespace TraineeProject.Models
         public string InstanceName { get; set; }
         public int TimeTaken { get; set; }
         public bool Succeeded { get; set; }
+        public bool Private { get; set; }
         public DateTime DateUploaded { get; set; }
     }
 }

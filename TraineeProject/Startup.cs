@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TraineeProject.Controllers;
 using TraineeProject.Database;
+using TraineeProject.Repository;
 
 namespace TraineeProject
 {
@@ -34,6 +35,9 @@ namespace TraineeProject
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<IParseRepository, ParseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,39 +4,47 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using TraineeProject.Database;
 using TraineeProject.Models;
+using TraineeProject.Repository;
 
 namespace TraineeProject.Controllers
 {
     [Route("api/character/")]
     [ApiController]
-    public class FFXIVCharactersController : ControllerBase
+    public class CharactersController : ControllerBase
     {
-        private readonly LogContext _context;
+        private readonly ICharacterRepository _repository;
 
-        public FFXIVCharactersController(LogContext context)
+        public CharactersController(ICharacterRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Character
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetFFXIVCharacters()
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-            return await _context.Character.ToListAsync();
+            IEnumerable<Character> characters = await _repository.GetAllCharacters();
+            return characters.Where(c => !c.Private).ToList();
         }
 
         // GET: api/Character/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacterFFXIV(int id)
+        public async Task<ActionResult<Character>> GetCharacter(int id)
         {
-            var character = await _context.Character.FindAsync(id);
+            var character = await _repository.GetCharacterById(id);
 
             if (character == null)
             {
                 return NotFound();
+            }
+
+            if (character.Private)
+            {
+                return BadRequest();
             }
 
             return character;
@@ -83,7 +91,7 @@ namespace TraineeProject.Controllers
         //     _context.Character.Add(characterFFXIV);
         //     await _context.SaveChangesAsync();
         //
-        //     return CreatedAtAction("GetCharacterFFXIV", new { id = characterFFXIV.Id }, characterFFXIV);
+        //     return CreatedAtAction("GetCharacter", new { id = characterFFXIV.Id }, characterFFXIV);
         // }
 
         // DELETE: api/Character/5
@@ -102,9 +110,9 @@ namespace TraineeProject.Controllers
             return characterFFXIV;
         }*/
 
-        private bool CharacterFFXIVExists(int id)
-        {
-            return _context.Character.Any(e => e.Id == id);
-        }
+        // private bool CharacterFFXIVExists(int id)
+        // {
+        //     return _context.Character.Any(e => e.Id == id);
+        // }
     }
 }
