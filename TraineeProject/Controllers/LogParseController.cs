@@ -22,8 +22,17 @@ namespace TraineeProject.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LogParse>>> GetParses()
         {
-            IEnumerable<LogParse> parses = await _parseRepository.GetAllParses();
+            var parses = await _parseRepository.GetAllParses();
             return parses.Where(p => !p.Private).ToList();
         }
+
+        [Route("character/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<LogParse>>> GetParsesByCharacterId(int id)
+        {
+            var parses = await _parseRepository.GetAllParsesByCharacterId(id);
+            return parses.ToList();
+        }
+
     }
 }

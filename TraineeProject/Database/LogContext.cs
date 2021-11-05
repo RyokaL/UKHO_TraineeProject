@@ -21,20 +21,20 @@ namespace TraineeProject.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Character>()
+            modelBuilder.Entity<CharacterLog>()
                 .HasKey(p => p.Id);
 
-            modelBuilder.Entity<CharacterLog>()
-                .HasMany(x => x.Characters)
+            modelBuilder.Entity<Character>()
+                .HasMany(x => x.CharacterLogs)
                 .WithOne()
                 .HasPrincipalKey(p => p.Id)
                 .HasForeignKey(p => p.Id);
 
-            modelBuilder.Entity<CharacterLog>()
-                .HasOne(x => x.LogParse)
+            modelBuilder.Entity<LogParse>()
+                .HasMany(x => x.CharacterLogs)
                 .WithOne()
-                .HasPrincipalKey<CharacterLog>(p => p.Id)
-                .HasForeignKey<LogParse>(p => p.Id);
+                .HasPrincipalKey(p => p.Id)
+                .HasForeignKey(p => p.Id);
         }
     }
 }

@@ -39,9 +39,10 @@ namespace TraineeProject.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<LogParse>> GetAllParsesByCharacterId(int characterId)
+        public async Task<IEnumerable<LogParse>> GetAllParsesByCharacterId(int characterId)
         {
-            throw new NotImplementedException();
+            return await _logContext.LogParse.Include(p => p.CharacterLogs).Where(p => !p.Private && p.CharacterLogs.Any(cl => cl.Id == characterId))
+                .ToListAsync();
         }
 
         public async Task<LogParse> GetParseById(int id)

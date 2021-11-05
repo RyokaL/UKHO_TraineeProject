@@ -12,5 +12,7 @@ namespace TraineeProject.Models
         public string WorldServer { get; set; }
         public int? UserId { get; set; }
         public bool Private { get; set; }
+
+        public virtual List<CharacterLog> CharacterLogs { get; set; }
     }
 }

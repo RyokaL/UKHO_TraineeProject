@@ -16,10 +16,7 @@ namespace TraineeProject.Models
         public float HPS { get; set; }
         public float OverhealPercent { get; set; }
         public float DamageTaken { get; set; }
-        public int LogId { get; set; }
+        public int LogParseId { get; set; }
         public int CharacterId { get; set; }
-
-        public virtual List<Character> Characters { get; set; }
-        public virtual LogParse LogParse { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace TraineeProject.Models
         public bool Succeeded { get; set; }
         public bool Private { get; set; }
         public DateTime DateUploaded { get; set; }
+
+        public virtual List<CharacterLog> CharacterLogs { get; set; }
     }
 }
