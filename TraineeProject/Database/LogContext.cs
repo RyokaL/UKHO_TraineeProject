@@ -22,19 +22,28 @@ namespace TraineeProject.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CharacterLog>()
-                .HasKey(p => p.Id);
+                .HasOne(p => p.Character)
+                .WithMany(p => p.CharacterLogs)
+                .HasForeignKey(p => p.CharacterId);
 
-            modelBuilder.Entity<Character>()
-                .HasMany(x => x.CharacterLogs)
-                .WithOne()
-                .HasPrincipalKey(p => p.Id)
-                .HasForeignKey(p => p.Id);
+            modelBuilder.Entity<CharacterLog>()
+                .HasOne(p => p.LogParse)
+                .WithMany(p => p.CharacterLogs)
+                .HasForeignKey(p => p.LogParseId);
 
-            modelBuilder.Entity<LogParse>()
-                .HasMany(x => x.CharacterLogs)
-                .WithOne()
-                .HasPrincipalKey(p => p.Id)
-                .HasForeignKey(p => p.Id);
+            //modelBuilder.Entity<Character>()
+            //    .HasMany(x => x.CharacterLogs)
+            //    .WithOne()
+            //    .HasPrincipalKey(p => p.Id)
+            //    .HasForeignKey(p => p.Id)
+            //    .HasConstraintName("FK_CharacterLog_CharacterId");
+
+            //modelBuilder.Entity<LogParse>()
+            //    .HasMany(x => x.CharacterLogs)
+            //    .WithOne()
+            //    .HasPrincipalKey(p => p.Id)
+            //    .HasForeignKey(p => p.Id)
+            //    .HasConstraintName("FK_CharacterLog_LogId");
         }
     }
 }
