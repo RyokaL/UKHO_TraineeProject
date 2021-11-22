@@ -23,12 +23,42 @@ namespace TraineeProject.Tests
             var options = new DbContextOptionsBuilder<LogContext>()
                 .UseInMemoryDatabase("logTable").Options;
             _logContext = new LogContext(options);
+
+            SeedDb();
+        }
+
+        private void SeedDb()
+        {
+            _logContext.Database.EnsureDeleted();
+            _logContext.Database.EnsureCreated();
+
+            var characterSeed = new List<Character>
+            {
+                new Character()
+                {
+                    CharacterName = "Test",
+                    WorldServer = "Test",
+                    Id = 1,
+                    Private = true
+                },
+                
+                new Character()
+                {
+                    CharacterName = "Test",
+                    WorldServer = "Test",
+                    Id = 2,
+                    Private = false
+                }
+            };
+
+            _logContext.Character.AddRange(characterSeed);
+            _logContext.SaveChanges();
         }
 
         [Test]
         public async Task GetPrivateCharacterReturnsNothing()
         {
-            var repository = A.Fake<ICharacterRepository<CharacterApiView>>();
+            var repository = new CharacterRepository(_logContext);
 
             var result = await repository.GetAllCharacters();
 
