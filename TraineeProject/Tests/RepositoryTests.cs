@@ -56,13 +56,25 @@ namespace TraineeProject.Tests
         }
 
         [Test]
-        public async Task GetPrivateCharacterReturnsNothing()
+        public async Task Private_Characters_Not_Returned()
         {
             var repository = new CharacterRepository(_logContext);
 
             var result = await repository.GetAllCharacters();
 
             Assert.AreEqual(1, result.Count());
+        }
+
+        [Test]
+        public async Task Private_Characters_In_Log_Are_Returned_Anonymised()
+        {
+            //TODO:
+        }
+
+        [Test]
+        public async Task Get_Parse_Log_Includes_Character_Logs_And_Characters_Info()
+        {
+            //TODO:
         }
     }
 }
