@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using TraineeProject.Database;
 using TraineeProject.Models;
+using TraineeProject.Models.Views;
 using TraineeProject.Repository;
 
 namespace TraineeProject.Controllers
@@ -16,24 +17,24 @@ namespace TraineeProject.Controllers
     [ApiController]
     public class CharactersController : ControllerBase
     {
-        private readonly ICharacterRepository _repository;
+        private readonly ICharacterRepository<CharacterApiView> _repository;
 
-        public CharactersController(ICharacterRepository repository)
+        public CharactersController(ICharacterRepository<CharacterApiView> repository)
         {
             _repository = repository;
         }
 
         // GET: api/Character
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
+        public async Task<ActionResult<IEnumerable<CharacterApiView>>> GetCharacters()
         {
-            IEnumerable<Character> characters = await _repository.GetAllCharacters();
-            return characters.Where(c => !c.Private).ToList();
+            IEnumerable<CharacterApiView> characters = await _repository.GetAllCharacters();
+            return characters.ToList();
         }
 
         // GET: api/Character/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterApiView>> GetCharacter(int id)
         {
             var character = await _repository.GetCharacterById(id);
 
@@ -42,10 +43,10 @@ namespace TraineeProject.Controllers
                 return NotFound();
             }
 
-            if (character.Private)
-            {
-                return BadRequest();
-            }
+            //if (character.Private)
+            //{
+            //    return BadRequest();
+            //}
 
             return character;
         }

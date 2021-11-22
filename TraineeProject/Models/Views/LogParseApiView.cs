@@ -11,16 +11,16 @@ namespace TraineeProject.Models.Views
             TimeTaken = parse.TimeTaken;
             Succeeded = parse.Succeeded;
             DateUploaded = parse.DateUploaded;
-            CharacterLogs = new List<CharacterLogApiView>();
+            CharacterLogs = new List<CharacterLogParseApiView>();
             foreach(CharacterLog c in parse.CharacterLogs)
             {
-                CharacterLogs.Add(new CharacterLogApiView(c));
+                CharacterLogs.Add(new CharacterLogParseApiView(c));
             }
         }
         public string InstanceName { get; set; }
         public int TimeTaken { get; set; }
         public bool Succeeded { get; set; }
         public DateTime DateUploaded { get; set; }
-        public List<CharacterLogApiView> CharacterLogs { get; set; }
+        public List<CharacterLogParseApiView> CharacterLogs { get; set; }
     }
 }

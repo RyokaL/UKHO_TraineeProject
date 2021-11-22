@@ -4,8 +4,16 @@
     {
         public CharacterApiView(Character character)
         {
-            CharacterName = character.CharacterName;
-            WorldServer = character.WorldServer;
+            if (character.Private)
+            {
+                CharacterName = "Anonymous";
+                WorldServer = "Private";
+            }
+            else
+            {
+                CharacterName = character.CharacterName;
+                WorldServer = character.WorldServer;
+            }
         }
 
         public string CharacterName { get; set; }

@@ -1,8 +1,8 @@
 ﻿namespace TraineeProject.Models.Views
 {
-    public class CharacterLogApiView
+    public class CharacterLogParseApiView
     {
-        public CharacterLogApiView(CharacterLog log)
+        public CharacterLogParseApiView(CharacterLog log)
         {
             JobClass = log.JobClass;
             RaidDPS = log.RaidDPS;

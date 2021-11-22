@@ -18,15 +18,34 @@ namespace TraineeProject.Repository
             _logContext = logContext;
         }
 
-        public async Task<IEnumerable<LogParseApiView>> GetAllParses()
+        //public async Task<IEnumerable<LogParseApiView>> GetAllParses()
+        //{
+        //    IEnumerable<LogParse> parses = await _logContext.LogParse.Include(p => p.CharacterLogs).ThenInclude(p => p.Character).Where(p => !p.Private).ToListAsync();
+        //    List<LogParseApiView> viewParses = new List<LogParseApiView>();
+        //    foreach(var parse in parses)
+        //    {
+        //        viewParses.Add(new LogParseApiView(parse));
+        //    }
+        //    return viewParses;
+        //}
+
+        public async Task<IEnumerable<LogParseApiView>> GetAllParses(string instanceName = "", string characterName = "", string worldServer = "", DateTime? fromDateTime = null, DateTime? untilDateTime = null)
         {
-            IEnumerable<LogParse> parses = await _logContext.LogParse.Include(p => p.CharacterLogs).ThenInclude(p => p.Character).Where(p => !p.Private).ToListAsync();
-            List<LogParseApiView> viewParses = new List<LogParseApiView>();
-            foreach(var parse in parses)
-            {
-                viewParses.Add(new LogParseApiView(parse));
-            }
-            return viewParses;
+            fromDateTime ??= DateTime.MinValue;
+            untilDateTime ??= DateTime.UtcNow;
+
+            IEnumerable<LogParse> parses = await _logContext.LogParse.Include(p => p.CharacterLogs)
+                .ThenInclude(p => p.Character)
+                .Where(p => !p.Private)
+                .Where(p => p.InstanceName.Contains(instanceName) 
+                            && p.DateUploaded >= fromDateTime 
+                            && p.DateUploaded <= untilDateTime 
+                            && p.CharacterLogs.Any(cl => !cl.Character.Private 
+                                                         && cl.Character.CharacterName.Contains(characterName) 
+                                                         && cl.Character.WorldServer.Contains(worldServer)))
+                .ToListAsync();
+
+            return parses.Select(parse => new LogParseApiView(parse)).ToList();
         }
 
         public async Task<IEnumerable<LogParseApiView>> GetAllParsesBetweenDates(DateTime fromDateTime, DateTime untilDateTime)

@@ -10,14 +10,19 @@ namespace TraineeProject.Database
 {
     public class LogContext : DbContext
     {
+        public LogContext()
+        {
+
+        }
+
         public LogContext(DbContextOptions<LogContext> options) : base(options)
         {
 
         }
 
-        public DbSet<Character> Character { get; set; }
-        public DbSet<CharacterLog> CharacterLog { get; set; }
-        public DbSet<LogParse> LogParse { get; set; }
+        public virtual DbSet<Character> Character { get; set; }
+        public virtual DbSet<CharacterLog> CharacterLog { get; set; }
+        public virtual DbSet<LogParse> LogParse { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

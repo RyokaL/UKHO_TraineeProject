@@ -37,7 +37,7 @@ namespace TraineeProject
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<ICharacterRepository<CharacterApiView>, CharacterRepository>();
             services.AddScoped<IParseRepository<LogParseApiView>, ParseRepository>();
         }
 

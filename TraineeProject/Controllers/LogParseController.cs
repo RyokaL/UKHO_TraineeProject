@@ -21,9 +21,9 @@ namespace TraineeProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LogParseApiView>>> GetParses()
+        public async Task<ActionResult<IEnumerable<LogParseApiView>>> GetParses([FromQuery] string characterName = "")
         {
-            var parses = await _parseRepository.GetAllParses();
+            var parses = await _parseRepository.GetAllParses(characterName: characterName);
             return new OkObjectResult(parses);
         }
 
