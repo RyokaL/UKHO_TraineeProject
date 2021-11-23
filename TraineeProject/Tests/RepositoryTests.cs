@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace TraineeProject.Tests
     public class RepositoryTests
     {
         private LogContext _logContext;
+        private List<Character> characterSeed;
+        private List<CharacterLog> logSeed;
+        private List<LogParse> parseSeed;
 
         [SetUp]
         public void SetUp()
@@ -32,7 +36,7 @@ namespace TraineeProject.Tests
             _logContext.Database.EnsureDeleted();
             _logContext.Database.EnsureCreated();
 
-            var characterSeed = new List<Character>
+            characterSeed = new List<Character>
             {
                 new Character()
                 {
@@ -51,7 +55,54 @@ namespace TraineeProject.Tests
                 }
             };
 
+            logSeed = new List<CharacterLog>()
+            {
+                new CharacterLog()
+                {
+                    Character = characterSeed[0],
+                    CharacterId = 1
+                },
+
+                new CharacterLog()
+                {
+                    Character = characterSeed[1],
+                    CharacterId = 2
+                }
+            };
+
+            parseSeed = new List<LogParse>()
+            {
+                new LogParse()
+                {
+                    Id = 1,
+                    InstanceName = "Test Fight",
+                    Private = false,
+                    DateUploaded = new DateTime(2021, 11, 23),
+                    Succeeded = true,
+                    TimeTaken = 100,
+                    CharacterLogs = new List<CharacterLog>()
+                    {
+                        logSeed[0],
+                        logSeed[1]
+                    }
+                },
+
+                new LogParse()
+                {
+                    Id = 2,
+                    Private = true,
+                    DateUploaded = DateTime.MinValue
+                }
+            };
+
+            logSeed[0].LogParse = parseSeed[0];
+            logSeed[0].LogParseId = 1;
+            logSeed[1].LogParse = parseSeed[0];
+            logSeed[1].LogParseId = 1;
+
             _logContext.Character.AddRange(characterSeed);
+            _logContext.CharacterLog.AddRange(logSeed);
+            _logContext.LogParse.AddRange(parseSeed);
             _logContext.SaveChanges();
         }
 
@@ -62,19 +113,41 @@ namespace TraineeProject.Tests
 
             var result = await repository.GetAllCharacters();
 
-            Assert.AreEqual(1, result.Count());
+            Assert.AreNotEqual(characterSeed.Count, result.Count());
         }
 
         [Test]
         public async Task Private_Characters_In_Log_Are_Returned_Anonymised()
         {
-            //TODO:
+            var repository = new ParseRepository(_logContext);
+
+            var result = await repository.GetAllParses();
+
+            Assert.AreNotEqual(characterSeed[0].CharacterName, result.ToList()[0].CharacterLogs[0].Character.CharacterName);
         }
 
         [Test]
-        public async Task Get_Parse_Log_Includes_Character_Logs_And_Characters_Info()
+        public async Task Private_Parses_Not_Returned()
         {
-            //TODO:
+            var repository = new ParseRepository(_logContext);
+
+            var result = await repository.GetAllParses();
+
+            Assert.AreNotEqual(logSeed.Count, result.Count());
+        }
+
+        [Test]
+        public async Task Get_Logs_By_Date()
+        {
+            var repository = new ParseRepository(_logContext);
+            var fromDate = new DateTime(2021, 11, 20);
+            var untilDate = new DateTime(2021, 11, 23);
+
+            var result = await repository.GetAllParses(fromDateTime: fromDate, untilDateTime: untilDate);
+            var logParseApiViews = result.ToList();
+
+            Assert.AreNotEqual(logSeed.Count, logParseApiViews.Count());
+            Assert.True(logParseApiViews.Any(p => p.DateUploaded >= fromDate && p.DateUploaded <= untilDate));
         }
     }
 }
