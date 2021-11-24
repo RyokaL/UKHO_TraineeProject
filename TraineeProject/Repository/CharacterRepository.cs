@@ -26,7 +26,7 @@ namespace TraineeProject.Repository
         public async Task<CharacterApiView> GetCharacterById(int id)
         {
             var character = await _logContext.Character.FindAsync(id);
-            return character == null ? null : new CharacterApiView(character);
+            return character == null ? null : (character.Private) ? null : new CharacterApiView(character);
         }
     }
 }
