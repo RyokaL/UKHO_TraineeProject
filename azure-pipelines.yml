@@ -26,6 +26,28 @@ steps:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/web_app'
+- task: VSBuild@1
+  inputs:
+    solution: '$(Build.SourcesDirectory)\\src\\Databases\\TraineeProject.Data.sqlproj'
+    msbuildArgs: '--output $(System.DefaultWorkingDirectory)/database/'
+    clean: true
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(Build.SourcesDirectory)\\src\\Databases\\TraineeProject.Data.sqlproj'
+
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise Subscription(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
+    AuthenticationType: 'server'
+    ServerName: 'cdbtrainee.database.windows.net'
+    DatabaseName: 'traineedb-Logs'
+    SqlUsername: 'calumdb'
+    SqlPassword: $(SQLPASS)
+    deployType: 'DacpacTask'
+    DeploymentAction: 'Publish'
+    DacpacFile: '$(System.DefaultWorkingDirectory)/database/*.dacpac'
+    IpDetectionMethod: 'AutoDetect'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
