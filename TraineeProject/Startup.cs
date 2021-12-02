@@ -11,6 +11,10 @@ using TraineeProject.Database;
 using TraineeProject.Models.Views;
 using TraineeProject.Repository;
 
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+
+using Azure.Identity;
+
 namespace TraineeProject
 {
     public class Startup
