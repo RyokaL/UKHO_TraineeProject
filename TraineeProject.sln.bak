@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TraineeProject", "TraineeProject\TraineeProject.csproj", "{13E2B209-29B0-4063-9D3E-9C36D7B853EF}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TraineeProject.Data", "TraineeProject.Data\TraineeProject.Data.sqlproj", "{5943CE10-D6ED-4CD3-A984-49F13D9E0AD0}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TraineeProject.Data", "\TraineeProject.Data\TraineeProject.Data.sqlproj", "{5943CE10-D6ED-4CD3-A984-49F13D9E0AD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
