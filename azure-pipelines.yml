@@ -34,12 +34,6 @@ steps:
     solution: '$(Build.SourcesDirectory)\\TraineeProject.Data\\TraineeProject.Data.sqlproj'
     clean: true
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/web_app'
-
 - task: SqlAzureDacpacDeployment@1
   inputs:
     azureSubscription: 'Visual Studio Enterprise Subscription(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
@@ -52,6 +46,12 @@ steps:
     DeploymentAction: 'Publish'
     DacpacFile: '$(System.DefaultWorkingDirectory)\TraineeProject.Data\bin\Debug\TraineeProject.Data.dacpac'
     IpDetectionMethod: 'AutoDetect'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/web_app'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
