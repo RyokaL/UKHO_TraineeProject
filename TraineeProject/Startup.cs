@@ -44,7 +44,8 @@ namespace TraineeProject
                 }
             };
 
-            var client = new SecretClient(new Uri("https://cdbtrainee.vault.azure.net/"), new DefaultAzureCredential(), secretClientOptions);
+            var client = new SecretClient(new Uri("https://cdbtrainee.vault.azure.net/"),
+                new DefaultAzureCredential(new DefaultAzureCredentialOptions {ExcludeVisualStudioCredential = false}), secretClientOptions);
 
             KeyVaultSecret sqlSecret = client.GetSecret("SQLLogDbPass");
 
