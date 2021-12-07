@@ -50,7 +50,7 @@ steps:
     SqlPassword: $(SQLPASS)
     deployType: 'DacpacTask'
     DeploymentAction: 'Publish'
-    DacpacFile: '$(System.DefaultWorkingDirectory)/database/*.dacpac'
+    DacpacFile: '$(System.DefaultWorkingDirectory)\TraineeProject.Data\bin\Debug\TraineeProject.Data.dacpac'
     IpDetectionMethod: 'AutoDetect'
 
 - task: AzureRmWebAppDeployment@4
