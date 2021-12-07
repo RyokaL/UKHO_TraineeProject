@@ -37,12 +37,7 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: '$(Build.SourcesDirectory)\\src\\Databases\\TraineeProject.Data.sqlproj'
-    msbuildArgs: '--output $(System.DefaultWorkingDirectory)/database/'
     clean: true
-
-- task: VSBuild@1
-  inputs:
-    solution: '$(Build.SourcesDirectory)\\src\\Databases\\TraineeProject.Data.sqlproj'
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
