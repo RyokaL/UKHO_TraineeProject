@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="e09a3ddb-3a13-4372-b614-2767c90bbdaa" ChangeDateTime="11/03/2021 16:03:39">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[Total Damage]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TotalDamage" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="41b8543d-d620-4bef-ac60-2d52dbf9f253" ChangeDateTime="11/03/2021 16:03:41">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[Percent Active]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PercentActive" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7ad08545-284b-48fc-b79c-3395694d0d0a" ChangeDateTime="11/03/2021 16:03:43">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[Overheal Percent]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OverhealPercent" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0c14c2e7-90dc-46fb-ab69-95c7286fac70" ChangeDateTime="11/03/2021 16:03:45">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[Damage Taken]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DamageTaken" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ff86c2cb-9cfb-4c6a-877e-d99d081c6ec5" ChangeDateTime="11/03/2021 16:03:47">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[Character Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CharacterId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f228dbb3-9adf-49a9-bdce-d3c9c5c40eca" ChangeDateTime="11/03/2021 16:03:57">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[Log Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LogId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3918c7ff-8dba-4dad-ace5-95755412089c" ChangeDateTime="11/03/2021 16:04:07">
+    <Property Name="ElementName" Value="[dbo].[LogParse].[Instance Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LogParse]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="InstanceName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="863e3d74-0dcd-436a-83a1-cd8178569e4a" ChangeDateTime="11/03/2021 16:04:29">
+    <Property Name="ElementName" Value="[dbo].[Character].[Character Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Character]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CharacterName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4c548499-5717-40bb-a427-93d1b653145b" ChangeDateTime="11/03/2021 16:04:35">
+    <Property Name="ElementName" Value="[dbo].[Character].[World Server]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Character]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WorldServer" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bbd77d4d-e359-4b13-a357-2cfd56f56eee" ChangeDateTime="11/03/2021 16:21:40">
+    <Property Name="ElementName" Value="[dbo].[Character].[User]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Character]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c2dd1ed7-40c8-43eb-853d-3bca81d33823" ChangeDateTime="11/03/2021 16:22:11">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[Class]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="JobClass" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8e4492fd-d366-4039-9f6b-e67d2e1cd842" ChangeDateTime="11/03/2021 16:22:17">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[rDPS]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RaidDPS" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3b6c3f8d-22fa-46b6-9fa2-c506b59a5457" ChangeDateTime="11/03/2021 16:22:21">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[aDPS]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ActualDPS" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="211c6777-1aeb-4cc6-870b-a9eb1010ad16" ChangeDateTime="11/04/2021 16:35:36">
+    <Property Name="ElementName" Value="[dbo].[LogParse].[Time Taken]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LogParse]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TimeTaken" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6476cf64-e5ca-4275-8a90-f7c8c5d05d97" ChangeDateTime="11/05/2021 11:00:37">
+    <Property Name="ElementName" Value="[dbo].[CharacterLog].[LogId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CharacterLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LogParseId" />
+  </Operation>
+</Operations>
