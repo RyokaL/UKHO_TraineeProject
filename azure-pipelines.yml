@@ -36,7 +36,7 @@ steps:
     arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/web_app'
 - task: VSBuild@1
   inputs:
-    solution: '$(Build.SourcesDirectory)TraineeProject\\TraineeProject.Data.sqlproj'
+    solution: '$(Build.SourcesDirectory)\\TraineeProject\\TraineeProject.Data.sqlproj'
     clean: true
 
 - task: SqlAzureDacpacDeployment@1
