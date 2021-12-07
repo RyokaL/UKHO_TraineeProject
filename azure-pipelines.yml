@@ -29,15 +29,16 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: VSBuild@1
+  inputs:
+    solution: '$(Build.SourcesDirectory)\\TraineeProject.Data\\TraineeProject.Data.sqlproj'
+    clean: true
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: true
     arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/web_app'
-- task: VSBuild@1
-  inputs:
-    solution: '$(Build.SourcesDirectory)\\TraineeProject\\TraineeProject.Data\\TraineeProject.Data.sqlproj'
-    clean: true
 
 - task: SqlAzureDacpacDeployment@1
   inputs:
