@@ -1,10 +1,23 @@
+using System;
+using Azure.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TraineeProject.Controllers;
+using TraineeProject.Database;
+using TraineeProject.Models.Views;
+using TraineeProject.Repository;
+
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Microsoft.Data.SqlClient;
 
 namespace TraineeProject
 {
@@ -20,12 +33,43 @@ namespace TraineeProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            SecretClientOptions secretClientOptions = new SecretClientOptions()
+            {
+                Retry =
+                {
+                    Delay = TimeSpan.FromSeconds(2),
+                    MaxDelay = TimeSpan.FromSeconds(16),
+                    MaxRetries = 5,
+                    Mode = RetryMode.Exponential
+                }
+            };
+
+            var client = new SecretClient(new Uri("https://cdbtrainee.vault.azure.net/"), new DefaultAzureCredential(), secretClientOptions);
+
+            KeyVaultSecret sqlSecret = client.GetSecret("SQLLogDbPass");
+
+            var sqlBuilder = new SqlConnectionStringBuilder
+            {
+                UserID = "calumdb",
+                Password = sqlSecret.Value,
+                InitialCatalog = "traineedb-Logs",
+                DataSource = "tcp:cdbtrainee.database.windows.net"
+            };
+
+            services.AddDbContext<LogContext>(options =>
+            {
+                options.UseSqlServer(sqlBuilder.ConnectionString);
+            });
+
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddScoped<ICharacterRepository<CharacterApiView>, CharacterRepository>();
+            services.AddScoped<IParseRepository<LogParseApiView>, ParseRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
