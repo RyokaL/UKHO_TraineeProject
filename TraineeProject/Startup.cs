@@ -33,34 +33,48 @@ namespace TraineeProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            SecretClientOptions secretClientOptions = new SecretClientOptions()
+            
+            if (Configuration.GetValue<string>("UseLocalSqlServer") == null)
             {
-                Retry =
+
+                var secretClientOptions = new SecretClientOptions()
                 {
-                    Delay = TimeSpan.FromSeconds(2),
-                    MaxDelay = TimeSpan.FromSeconds(16),
-                    MaxRetries = 5,
-                    Mode = RetryMode.Exponential
-                }
-            };
+                    Retry =
+                    {
+                        Delay = TimeSpan.FromSeconds(2),
+                        MaxDelay = TimeSpan.FromSeconds(16),
+                        MaxRetries = 5,
+                        Mode = RetryMode.Exponential
+                    }
+                };
 
-            var client = new SecretClient(new Uri("https://cdbtrainee.vault.azure.net/"),
-                new DefaultAzureCredential(new DefaultAzureCredentialOptions {ExcludeVisualStudioCredential = false}), secretClientOptions);
+                var client = new SecretClient(new Uri("https://cdbtrainee.vault.azure.net/"),
+                    new DefaultAzureCredential(new DefaultAzureCredentialOptions {ExcludeVisualStudioCredential = false}),
+                    secretClientOptions);
 
-            KeyVaultSecret sqlSecret = client.GetSecret("SQLLogDbPass");
+                KeyVaultSecret sqlSecret = client.GetSecret("SQLLogDbPass");
 
-            var sqlBuilder = new SqlConnectionStringBuilder
+                var sqlBuilder = new SqlConnectionStringBuilder
+                {
+                    UserID = "calumdb",
+                    Password = sqlSecret.Value,
+                    InitialCatalog = "traineedb-Logs",
+                    DataSource = "tcp:cdbtrainee.database.windows.net"
+                };
+
+                services.AddDbContext<LogContext>(options =>
+                {
+                    options.UseSqlServer(sqlBuilder.ConnectionString);
+                });
+            }
+            else
             {
-                UserID = "calumdb",
-                Password = sqlSecret.Value,
-                InitialCatalog = "traineedb-Logs",
-                DataSource = "tcp:cdbtrainee.database.windows.net"
-            };
-
-            services.AddDbContext<LogContext>(options =>
-            {
-                options.UseSqlServer(sqlBuilder.ConnectionString);
-            });
+                services.AddDbContext<LogContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("TraineeSQLDbLocal"));
+                });
+            }
+            
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -89,6 +103,7 @@ namespace TraineeProject
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
