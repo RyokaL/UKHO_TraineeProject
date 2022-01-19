@@ -4,6 +4,7 @@
     {
         public CharacterApiView(Character character)
         {
+            Id = character.Id;
             if (character.Private)
             {
                 CharacterName = "Anonymous";
@@ -16,6 +17,7 @@
             }
         }
 
+        public int Id { get; set; }
         public string CharacterName { get; set; }
         public string WorldServer { get; set; }
     }

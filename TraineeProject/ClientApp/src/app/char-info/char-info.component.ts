@@ -23,6 +23,7 @@ export class CharInfoComponent implements OnInit {
 }
 
 interface CharacterInfo {
+  id: number;
   characterName: string;
   worldServer: string;
 }
