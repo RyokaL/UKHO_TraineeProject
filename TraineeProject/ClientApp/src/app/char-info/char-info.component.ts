@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { CharacterInfo, CharacterService } from "../../services/character-service/character-service.service";
 
 @Component({
   selector: 'app-char-info',
@@ -9,20 +9,12 @@ import { HttpClient } from '@angular/common/http';
 export class CharInfoComponent implements OnInit {
   public characters: CharacterInfo[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<CharacterInfo[]>(baseUrl + 'api/character').subscribe(result => {
-      this.characters = result;
-    },
-      error => console.error(error));
+  constructor(private charService: CharacterService) {
+
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.charService.getCharacterInfo().subscribe(result => this.characters = result);
   }
 
-}
-
-export interface CharacterInfo {
-  id: number;
-  characterName: string;
-  worldServer: string;
 }

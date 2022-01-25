@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CharacterInfo } from "../char-info/char-info.component";
+import { CharacterInfo } from "../../services/character-service/character-service.service";
 
 @Component({
   selector: 'app-parse-log',
