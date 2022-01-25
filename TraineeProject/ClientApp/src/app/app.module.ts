@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CharInfoComponent } from './char-info/char-info.component';
+import { ParseLogComponent } from './parse-log/parse-log.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CharInfoComponent } from './char-info/char-info.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    CharInfoComponent
+    CharInfoComponent,
+    ParseLogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

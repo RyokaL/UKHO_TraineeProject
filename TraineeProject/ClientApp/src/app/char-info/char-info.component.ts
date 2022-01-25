@@ -12,7 +12,6 @@ export class CharInfoComponent implements OnInit {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<CharacterInfo[]>(baseUrl + 'api/character').subscribe(result => {
       this.characters = result;
-      console.log(result);
     },
       error => console.error(error));
   }
@@ -22,7 +21,7 @@ export class CharInfoComponent implements OnInit {
 
 }
 
-interface CharacterInfo {
+export interface CharacterInfo {
   id: number;
   characterName: string;
   worldServer: string;
