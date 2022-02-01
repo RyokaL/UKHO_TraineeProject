@@ -1,1 +1,25 @@
-<p>parse-log works!</p>
+<h1 id="tableLabel" *ngIf="characterName">{{ characterName }}'s Parses</h1>
+<h1 id="tableLabel" *ngIf="!characterName"></h1>
+
+<p *ngIf="!parses"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="parses">
+  <thead>
+  <tr>
+    <th>Instance Name</th>
+    <th>Time Taken</th>
+    <th>Cleared?</th>
+    <th>Date</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let parse of parses">
+    <td>{{ parse.instanceName }}</td>
+    <td>{{ parse.timeTaken }}</td>
+    <td>{{ parse.succeeded}}</td>
+    <td>{{ parse.dateUploaded }}</td>
+    <td><a>View Log</a></td>
+  </tr>
+  </tbody>
+</table>

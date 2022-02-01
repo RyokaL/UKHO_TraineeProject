@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CharacterInfo } from "../../services/character-service/character-service.service";
+import { ActivatedRoute } from '@angular/router';
+import { CharacterInfo, CharacterService } from "../../services/character-service/character-service.service";
+import { LogParse, ParseLogService } from "../../services/parse-log-service/parse-log.service";
 
 @Component({
   selector: 'app-parse-log',
@@ -9,31 +11,29 @@ import { CharacterInfo } from "../../services/character-service/character-servic
 })
 export class ParseLogComponent implements OnInit {
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  private id: number;
+  private parses: LogParse[];
+  private characterName: string;
+
+  constructor(http: HttpClient,
+    private route: ActivatedRoute,
+    private parseService: ParseLogService,
+    private charService: CharacterService,
+    @Inject('BASE_URL') baseUrl: string) {
 
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.id = Number(params.get("id"));
+      this.updateParses();
+    });
   }
 
-}
+  updateParses() {
+    this.parses = null;
+    this.charService.getCharacterById(this.id).subscribe(result => this.characterName = result.characterName);
+    this.parseService.getLogsForCharacter(this.id).subscribe(result => this.parses = result);
+  }
 
-export interface CharacterLogParse {
-  jobClass: string;
-  raidDPS: number;
-  actualDPS: number;
-  totalDamage: number;
-  percentActive: number;
-  hps: number;
-  overhealPercent: number;
-  damageTaken: number;
-  character: CharacterInfo;
-}
-
-export interface LogParse {
-  instanceName: string;
-  timeTaken: number;
-  succeeded: boolean;
-  dateUploaded: Date;
-  characterLogs: CharacterLogParse[];
 }
