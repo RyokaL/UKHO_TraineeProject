@@ -7,7 +7,7 @@ import { CharacterInfo, CharacterService } from "../../services/character-servic
   styleUrls: ['./char-info.component.css']
 })
 export class CharInfoComponent implements OnInit {
-  private characters: CharacterInfo[];
+  public characters: CharacterInfo[];
 
   constructor(private charService: CharacterService, @Inject("BASE_URL") baseUrl: string) {
 
