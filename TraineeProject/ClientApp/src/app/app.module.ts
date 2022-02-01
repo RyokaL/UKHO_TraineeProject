@@ -31,7 +31,7 @@ import { ParseLogComponent } from './parse-log/parse-log.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'characters', component: CharInfoComponent },
-      { path: 'parse/:id', component: ParseLogComponent },
+      { path: 'characters/:id/parses', component: ParseLogComponent },
     ])
   ],
   providers: [],

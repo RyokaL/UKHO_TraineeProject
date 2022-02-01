@@ -17,7 +17,7 @@
   <tr *ngFor="let parse of parses">
     <td>{{ parse.instanceName }}</td>
     <td>{{ parse.timeTaken }}</td>
-    <td>{{ parse.succeeded}}</td>
+    <td>{{ parse.succeeded ? '✅' : '❌'}}</td>
     <td>{{ parse.dateUploaded }}</td>
     <td><a>View Log</a></td>
   </tr>

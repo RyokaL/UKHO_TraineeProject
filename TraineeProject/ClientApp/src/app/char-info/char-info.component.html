@@ -16,7 +16,7 @@
   <tr *ngFor="let character of characters">
     <td>{{ character.characterName }}</td>
     <td>{{ character.worldServer }}</td>
-    <td><a href ="{{ baseUrl }}/parse/{{ character.id }}">All Logs</a></td>
+    <td><a href ="{{ baseUrl }}/characters/{{ character.id }}/parses">All Logs</a></td>
   </tr>
   </tbody>
 </table>
