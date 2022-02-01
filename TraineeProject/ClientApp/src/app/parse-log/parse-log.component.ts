@@ -11,9 +11,9 @@ import { LogParse, ParseLogService } from "../../services/parse-log-service/pars
 })
 export class ParseLogComponent implements OnInit {
 
-  public id: number;
-  public parses: LogParse[];
-  public characterName: string;
+  private id: number;
+  private parses: LogParse[];
+  private characterName: string;
 
   constructor(http: HttpClient,
     private route: ActivatedRoute,
