@@ -9,12 +9,14 @@
   <tr>
     <th>Character Name</th>
     <th>World Server</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let character of characters">
     <td>{{ character.characterName }}</td>
     <td>{{ character.worldServer }}</td>
+    <td><a href ="{{ baseUrl }}/parse/{{ character.id }}">All Logs</a></td>
   </tr>
   </tbody>
 </table>

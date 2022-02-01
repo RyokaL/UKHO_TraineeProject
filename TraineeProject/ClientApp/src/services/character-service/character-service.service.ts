@@ -20,6 +20,13 @@ export class CharacterService {
         );
   }
 
+  getCharacterById(id: number): Observable<CharacterInfo> {
+    return this.http.get<CharacterInfo>(this.baseUrl + 'api/character/' + id)
+      .pipe(
+        catchError(this.handleError<CharacterInfo>())
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
