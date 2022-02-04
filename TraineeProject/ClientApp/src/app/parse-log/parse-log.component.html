@@ -14,12 +14,46 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let parse of parses">
-    <td>{{ parse.instanceName }}</td>
-    <td>{{ parse.timeTaken }}</td>
-    <td>{{ parse.succeeded ? '✅' : '❌'}}</td>
-    <td>{{ parse.dateUploaded }}</td>
-    <td><a>View Log</a></td>
-  </tr>
+    <ng-template *ngFor="let parse of parses; let i = index;">
+      <tr>
+        <td>{{ parse.instanceName }}</td>
+        <td>{{ parse.timeTaken }}</td>
+        <td>{{ parse.succeeded ? '✅' : '❌'}}</td>
+        <td>{{ parse.dateUploaded }}</td>
+        <td><a (click)="showLogs[index] = !showLogs[index]">View Log</a></td>
+      </tr>
+      <tr *ngIf="showLogs[index]">
+        <td><table>
+          <thead>
+            <tr>
+              <th>Character Name</th>
+              <th>World Server</th>
+              <th>Job</th>
+              <th>rDPS</th>
+              <th>aDPS</th>
+              <th>Damage Dealt</th>
+              <th>Active</th>
+              <th>HPS</th>
+              <th>Overheal</th>
+              <th>Damage Taken</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of parses[index].characterLogs">
+              <td>{{ log.characterInfo.characterName }}</td>
+              <td>{{ log.characterInfo.worldServer }}</td>
+              <td>{{ log.jobClass }}</td>
+              <td>{{ log.raidDPS }}</td>
+              <td>{{ log.actualDPS }}</td>
+              <td>{{ log.totalDamage }}</td>
+              <td>{{ log.percentActive }}</td>
+              <td>{{ log.hps }}</td>
+              <td>{{ log.overheal }}</td>
+              <td>{{ log.damageTaken }}</td>
+            </tr>
+          </tbody>
+        </table></td>
+      </tr>
+    </ng-template>
   </tbody>
 </table>

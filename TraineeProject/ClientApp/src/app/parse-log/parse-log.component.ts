@@ -12,8 +12,9 @@ import { LogParse, ParseLogService } from "../../services/parse-log-service/pars
 export class ParseLogComponent implements OnInit {
 
   private id: number;
-  private parses: LogParse[];
-  private characterName: string;
+  public parses: LogParse[];
+  public characterName: string;
+  public showLogs: boolean[] = [];
 
   constructor(http: HttpClient,
     private route: ActivatedRoute,
@@ -29,11 +30,15 @@ export class ParseLogComponent implements OnInit {
       this.updateParses();
     });
   }
-
+  
   updateParses() {
     this.parses = null;
     this.charService.getCharacterById(this.id).subscribe(result => this.characterName = result.characterName);
-    this.parseService.getLogsForCharacter(this.id).subscribe(result => this.parses = result);
+    this.parseService.getLogsForCharacter(this.id).subscribe(
+      result => {
+        this.parses = result;
+        this.showLogs = this.showLogs.fill(false, 0, this.parses.length);
+      }
+    );
   }
-
 }
