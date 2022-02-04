@@ -14,16 +14,16 @@
   </tr>
   </thead>
   <tbody>
-    <ng-template *ngFor="let parse of parses; let i = index;">
+    <ng-container *ngFor="let parse of parses; let i = index;">
       <tr>
         <td>{{ parse.instanceName }}</td>
         <td>{{ parse.timeTaken }}</td>
         <td>{{ parse.succeeded ? '✅' : '❌'}}</td>
         <td>{{ parse.dateUploaded }}</td>
-        <td><a (click)="showLogs[index] = !showLogs[index]">View Log</a></td>
+        <td><a (click)="showLogs[i] = !showLogs[i]">View Log</a></td>
       </tr>
-      <tr *ngIf="showLogs[index]">
-        <td><table>
+      <tr *ngIf="showLogs[i]">
+        <td colspan="5"><table>
           <thead>
             <tr>
               <th>Character Name</th>
@@ -39,21 +39,23 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let log of parses[index].characterLogs">
-              <td>{{ log.characterInfo.characterName }}</td>
-              <td>{{ log.characterInfo.worldServer }}</td>
-              <td>{{ log.jobClass }}</td>
-              <td>{{ log.raidDPS }}</td>
-              <td>{{ log.actualDPS }}</td>
-              <td>{{ log.totalDamage }}</td>
-              <td>{{ log.percentActive }}</td>
-              <td>{{ log.hps }}</td>
-              <td>{{ log.overheal }}</td>
-              <td>{{ log.damageTaken }}</td>
-            </tr>
+            <ng-container *ngFor="let log of parses[i].characterLogs;">
+              <tr>
+                <td>{{ log.character.characterName }}</td>
+                <td>{{ log.character.worldServer }}</td>
+                <td>{{ log.jobClass }}</td>
+                <td>{{ log.raidDPS }}</td>
+                <td>{{ log.actualDPS }}</td>
+                <td>{{ log.totalDamage }}</td>
+                <td>{{ log.percentActive }}</td>
+                <td>{{ log.hps }}</td>
+                <td>{{ log.overheal }}</td>
+                <td>{{ log.damageTaken }}</td>
+              </tr>
+            </ng-container>
           </tbody>
         </table></td>
       </tr>
-    </ng-template>
+    </ng-container>
   </tbody>
 </table>
