@@ -38,7 +38,6 @@ export class ParseLogComponent implements OnInit {
       result => {
         this.parses = result;
         this.showLogs = this.showLogs.fill(false, 0, this.parses.length);
-        console.log(JSON.stringify(this.parses));
       }
     );
   }
