@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MsalBroadcastService, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG } from '@azure/msal-angular';
+import { MsalBroadcastService, MsalGuardConfiguration, MsalService, MSAL_GUARD_CONFIG, MsalRedirectComponent } from '@azure/msal-angular';
 import { AuthenticationResult, InteractionStatus, InteractionType, PopupRequest, RedirectRequest } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { filter, takeUntil } from 'rxjs/operators';
   templateUrl: './nav-menu-login-out.component.html',
   styleUrls: ['./nav-menu-login-out.component.css']
 })
-export class NavMenuLoginOutComponent implements OnInit {
+export class NavMenuLoginOutComponent implements OnInit, OnDestroy {
 
   loggedIn = false;
   isIframe = false;
@@ -39,38 +39,22 @@ export class NavMenuLoginOutComponent implements OnInit {
   }
 
   login(): void {
-    if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
-      if (this.msalGuardConfig.authRequest) {
-        this.authService.loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
-          .subscribe((response: AuthenticationResult) => {
-            this.authService.instance.setActiveAccount(response.account);
-          });
-      } else {
-        this.authService.loginPopup()
-          .subscribe((response: AuthenticationResult) => {
-            this.authService.instance.setActiveAccount(response.account);
-          });
-      }
+    if (this.msalGuardConfig.authRequest){
+      this.authService.loginRedirect({...this.msalGuardConfig.authRequest} as RedirectRequest);
     } else {
-      if (this.msalGuardConfig.authRequest) {
-        this.authService.loginRedirect({ ...this.msalGuardConfig.authRequest } as RedirectRequest);
-      } else {
-        this.authService.loginRedirect();
-      }
+      this.authService.loginRedirect();
     }
   }
 
   logout(): void {
-    if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
-      this.authService.logoutPopup({
-        postLogoutRedirectUri: "/",
-        mainWindowRedirectUri: "/"
-      });
-    } else {
-      this.authService.logoutRedirect({
-        postLogoutRedirectUri: "/",
-      });
-    }
+    this.authService.logoutRedirect({
+      postLogoutRedirectUri: "/",
+    });
+  }
+
+  ngOnDestroy(): void {
+    this._destroying$.next(undefined);
+    this._destroying$.complete();
   }
 
 }
