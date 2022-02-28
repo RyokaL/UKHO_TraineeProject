@@ -16,6 +16,17 @@ import { NavMenuLoginOutComponent } from './nav-menu-login-out/nav-menu-login-ou
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
 import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
 
+export const b2cPolicies = {
+  names: {
+      signUpSignIn: "B2C_1_TraineeProjectSignUpSignIn"
+  },
+  authorities: {
+      signUpSignIn: {
+          authority: "https://ukhofflogs.b2clogin.com/ukhofflogs.onmicrosoft.com/B2C_1_TraineeProjectSignUpSignIn",
+      }
+  },
+  authorityDomain: "ukhofflogs.b2clogin.com"
+};
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
   console.log(message);
@@ -25,8 +36,11 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
       clientId: 'b77cbc4e-15f2-475b-8588-0163bcb9499a',
-      authority: 'https://login.microsoftonline.com/common',
-      redirectUri: 'http://localhost:4200'
+      authority: b2cPolicies.authorities.signUpSignIn.authority,
+      knownAuthorities: [b2cPolicies.authorityDomain],
+      redirectUri: '/',
+      postLogoutRedirectUri: '/',
+      navigateToLoginRequestUrl: true
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
@@ -42,22 +56,9 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   });
 }
 
-export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map<string, Array<string>>();
-  protectedResourceMap.set('https://graph.microsoft.com/v1.0/me', ['user.read']);
-
-  return {
-    interactionType: InteractionType.Popup,
-    protectedResourceMap
-  };
-}
-
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return { 
-    interactionType: InteractionType.Popup,
-    authRequest: {
-      scopes: ['user.read']
-    }
+    interactionType: InteractionType.Redirect
   };
 }
 
@@ -87,21 +88,12 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true
-    },
-    {
       provide: MSAL_INSTANCE,
       useFactory: MSALInstanceFactory
     },
     {
       provide: MSAL_GUARD_CONFIG,
       useFactory: MSALGuardConfigFactory
-    },
-    {
-      provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: MSALInterceptorConfigFactory
     },
     MsalService,
     MsalGuard,
