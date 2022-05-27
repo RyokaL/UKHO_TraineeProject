@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CharacterInfo } from "../character-service/character-service.service";
+import { API_URL } from 'src/app/app.api';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { CharacterInfo } from "../character-service/character-service.service";
 export class ParseLogService {
 
 
-  constructor(private http: HttpClient, @Inject('API_URL') private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject(API_URL) private baseUrl: string) {
 
   }
 

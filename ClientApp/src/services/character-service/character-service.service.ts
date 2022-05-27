@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError} from 'rxjs/operators';
+import { API_URL } from 'src/app/app.api';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { catchError} from 'rxjs/operators';
 export class CharacterService {
 
   
-  constructor(private http: HttpClient, @Inject('API_URL') private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject(API_URL) private baseUrl: string) {
 
   }
 
