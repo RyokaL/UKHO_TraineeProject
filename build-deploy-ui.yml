@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    - main
+  paths:
+    - ClientApp/**
+
+variables:
+  - group: Pipeline-Variables
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+- script: yarn install
+  workingDirectory: ClientApp
+
+- script: yarn test
+  workingDirectory: ClientApp
+
+- script: yarn build
+  workingDirectory: ClientApp
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: ClientApp/dist
+    azure_static_web_apps_api_token: $(static-web-app-token)
