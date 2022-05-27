@@ -17,8 +17,13 @@ variables:
   - name: buildConfiguration
     value: 'Release'
   - group: Pipeline-Variables
-  
+
 steps:
+
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 
+    checkLatest: true
 
 - task: VSBuild@1
   inputs:
