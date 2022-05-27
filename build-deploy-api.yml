@@ -1,0 +1,38 @@
+trigger:
+  branches:
+    - main
+  paths:
+    exclude:
+      - TraineeProject.Data/**
+      - ClientApp/**
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+steps:
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/web_app'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Visual Studio Enterprise Subscription(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
+    appType: 'webApp'
+    WebAppName: 'calumdbtraineeproject'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/web_app/*.zip'
+    enableCustomDeployment: true
+    DeploymentType: 'webDeploy'
+    RemoveAdditionalFilesFlag: true

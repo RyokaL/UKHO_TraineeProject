@@ -1,0 +1,38 @@
+trigger:
+  branches:
+    - main
+  paths:
+    - TraineeProject.Data/**
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  - group: Pipeline-Variables
+steps:
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(Build.SourcesDirectory)\\TraineeProject.Data\\TraineeProject.Data.sqlproj'
+    clean: true
+
+- task: SqlAzureDacpacDeployment@1
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise Subscription(03706ad7-97e6-4ed3-ab37-a17ec2d4dad8)'
+    AuthenticationType: 'server'
+    ServerName: 'cdbtrainee.database.windows.net'
+    DatabaseName: 'traineedb-Logs'
+    SqlUsername: 'calumdb'
+    SqlPassword: $(SQLLogDbPass)
+    deployType: 'DacpacTask'
+    DeploymentAction: 'Publish'
+    DacpacFile: '$(System.DefaultWorkingDirectory)\TraineeProject.Data\bin\Debug\TraineeProject.Data.dacpac'
+    IpDetectionMethod: 'AutoDetect'
