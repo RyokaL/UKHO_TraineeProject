@@ -6,6 +6,8 @@ trigger:
     exclude:
       - TraineeProject.Data/**
       - ClientApp/**
+      - build-deploy-database.yml
+      - build-deploy-ui.yml
 
 pool:
   vmImage: 'windows-latest'

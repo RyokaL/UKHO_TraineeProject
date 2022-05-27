@@ -4,6 +4,7 @@ trigger:
       - main
   paths:
     include:
+      - build-deploy-database.yml
       - TraineeProject.Data/**
 
 pool:
@@ -21,9 +22,10 @@ variables:
 steps:
 
 - task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
   inputs:
-    versionSpec: 
-    checkLatest: true
+    restoreSolution: '$(solution)'
 
 - task: VSBuild@1
   inputs:
