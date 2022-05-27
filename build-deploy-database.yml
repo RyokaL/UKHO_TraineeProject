@@ -17,12 +17,8 @@ variables:
   - name: buildConfiguration
     value: 'Release'
   - group: Pipeline-Variables
+  
 steps:
-
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '6.x'
 
 - task: VSBuild@1
   inputs:
