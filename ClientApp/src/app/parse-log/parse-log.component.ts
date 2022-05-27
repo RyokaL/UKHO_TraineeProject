@@ -19,8 +19,7 @@ export class ParseLogComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private parseService: ParseLogService,
-    private charService: CharacterService,
-    @Inject('BASE_URL') baseUrl: string) {
+    private charService: CharacterService) {
 
   }
 

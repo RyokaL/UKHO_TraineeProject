@@ -9,7 +9,7 @@ import { CharacterInfo, CharacterService } from "../../services/character-servic
 export class CharInfoComponent implements OnInit {
   public characters: CharacterInfo[];
 
-  constructor(private charService: CharacterService, @Inject("BASE_URL") baseUrl: string) {
+  constructor(private charService: CharacterService) {
 
   }
 

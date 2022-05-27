@@ -10,7 +10,7 @@ import { CharacterInfo } from "../character-service/character-service.service";
 export class ParseLogService {
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('API_URL') private baseUrl: string) {
 
   }
 

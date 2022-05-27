@@ -9,7 +9,7 @@ import { catchError} from 'rxjs/operators';
 export class CharacterService {
 
   
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('API_URL') private baseUrl: string) {
 
   }
 
