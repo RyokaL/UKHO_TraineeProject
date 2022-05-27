@@ -1,8 +1,10 @@
 trigger:
   branches:
-    - main
+    include:
+      - main
   paths:
-    - ClientApp/**
+    include:
+      - ClientApp/**
 
 variables:
   - group: Pipeline-Variables

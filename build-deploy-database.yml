@@ -1,8 +1,10 @@
 trigger:
   branches:
-    - main
+    include:
+      - main
   paths:
-    - TraineeProject.Data/**
+    include:
+      - TraineeProject.Data/**
 
 pool:
   vmImage: 'windows-latest'
