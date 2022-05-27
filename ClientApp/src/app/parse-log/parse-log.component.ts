@@ -16,7 +16,7 @@ export class ParseLogComponent implements OnInit {
   public characterName: string;
   public showLogs: boolean[] = [];
 
-  constructor(http: HttpClient,
+  constructor(
     private route: ActivatedRoute,
     private parseService: ParseLogService,
     private charService: CharacterService,
