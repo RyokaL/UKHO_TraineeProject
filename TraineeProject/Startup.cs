@@ -98,6 +98,11 @@ namespace TraineeProject
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseCors((builder) =>
+            {
+                builder.AllowAnyOrigin().AllowCredentials();
+            });
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
