@@ -100,7 +100,7 @@ namespace TraineeProject
 
             app.UseCors((builder) =>
             {
-                builder.AllowAnyOrigin().AllowCredentials();
+                builder.WithOrigins("http://localhost:4200/", "https://happy-mushroom-038ec4503.1.azurestaticapps.net/");
             });
 
             app.UseRouting();
