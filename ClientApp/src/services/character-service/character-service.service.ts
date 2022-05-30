@@ -36,7 +36,7 @@ export class CharacterService {
   }
 
   addUserToCharacter(character: CharacterInfoReq, userId: string): boolean {
-    this.http.put<any>(this.baseUrl + 'api/character', { character, userId: userId }, {observe: 'response'})
+    this.http.put<any>(this.baseUrl + 'api/character', { characterName: character.characterName, worldServer: character.worldServer, userId: userId }, {observe: 'response'})
       .subscribe(response => {
         return response.ok
       });

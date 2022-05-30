@@ -1,7 +1,7 @@
 <p>Add Your Character</p>
 <p *ngIf="error">That character doesn't exist!</p>
 <form [formGroup]="addCharacterForm" (ngSubmit)="onSubmit()">
-    <input type="text" formControlName="charName" placeholder="Character Name">
+    <input type="text" formControlName="characterName" placeholder="Character Name">
     <input type="text" formControlName="worldServer" placeholder="World Server">
     <input type="submit" value="Submit">
 </form>

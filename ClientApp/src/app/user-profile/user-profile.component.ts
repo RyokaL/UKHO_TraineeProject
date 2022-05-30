@@ -22,7 +22,7 @@ export class UserProfileComponent implements OnInit {
     public characters: CharacterInfo[];
 
   addCharacterForm = this.formBuilder.group({
-    charName: '',
+    characterName: '',
     worldServer: ''
   });
 
