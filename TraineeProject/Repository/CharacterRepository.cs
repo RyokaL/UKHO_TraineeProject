@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TraineeProject.Database;
 using TraineeProject.Models;
+using TraineeProject.Models.Request;
 using TraineeProject.Models.Views;
 
 namespace TraineeProject.Repository
@@ -15,6 +16,20 @@ namespace TraineeProject.Repository
         public CharacterRepository(LogContext _logContext)
         {
             this._logContext = _logContext;
+        }
+
+        public async Task<CharacterApiView> AddCharacter(CharacterRequest character)
+        {
+            Character exists = await _logContext.Character.FirstOrDefaultAsync(c => c.CharacterName == character.CharacterName && c.WorldServer == character.WorldServer);
+            if(exists == null)
+            {
+                var dbCharacter = CharacterRequest.convertToDbModel(character);
+                _logContext.Character.Add(dbCharacter);
+                await _logContext.SaveChangesAsync();
+                return new CharacterApiView(dbCharacter);
+            }
+
+            return null;
         }
 
         public async Task<IEnumerable<CharacterApiView>> GetAllCharacters()

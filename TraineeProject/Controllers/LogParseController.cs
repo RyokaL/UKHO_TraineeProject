@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TraineeProject.Models;
+using TraineeProject.Models.Request;
 using TraineeProject.Models.Views;
 using TraineeProject.Repository;
 
@@ -11,7 +12,7 @@ namespace TraineeProject.Controllers
 {
     [Route("/api/parse/")]
     [ApiController]
-    public class LogParseController
+    public class LogParseController : ControllerBase
     {
         private readonly IParseRepository<LogParseApiView> _parseRepository;
 
@@ -25,6 +26,22 @@ namespace TraineeProject.Controllers
         {
             var parses = await _parseRepository.GetAllParses(characterName: characterName);
             return new OkObjectResult(parses);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<LogParseApiView>> AddParse(LogParseRequest logParse)
+        {
+            LogParseApiView ret = null;
+            try
+            {
+                ret = await _parseRepository.AddParse(logParse);
+            }
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
+
+            return ret == null ? BadRequest() : CreatedAtAction("GetCharacter", new { id = ret.Id }, ret);
         }
 
         [Route("character/{id}")]

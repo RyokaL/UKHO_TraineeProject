@@ -7,6 +7,7 @@ namespace TraineeProject.Models.Views
     {
         public LogParseApiView(LogParse parse)
         {
+            Id = parse.Id;
             InstanceName = parse.InstanceName;
             TimeTaken = parse.TimeTaken;
             Succeeded = parse.Succeeded;
@@ -17,6 +18,7 @@ namespace TraineeProject.Models.Views
                 CharacterLogs.Add(new CharacterLogParseApiView(c));
             }
         }
+        public int Id { get; set; }
         public string InstanceName { get; set; }
         public int TimeTaken { get; set; }
         public bool Succeeded { get; set; }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TraineeProject.Database;
 using TraineeProject.Models;
+using TraineeProject.Models.Request;
 using TraineeProject.Models.Views;
 
 namespace TraineeProject.Repository
@@ -83,6 +84,21 @@ namespace TraineeProject.Repository
         {
             var parse = await _logContext.LogParse.FindAsync(id);
             return parse == null ? null : new LogParseApiView(parse);
+        }
+
+        public async Task<LogParseApiView> AddParse(LogParseRequest parse)
+        {
+            var dbParse = LogParseRequest.convertToDbModel(parse);
+            foreach(CharacterLogRequest charLog in parse.CharacterLogs)
+            {
+                var charLogChar = await _logContext.Character.FirstOrDefaultAsync(c => c.CharacterName == charLog.Character.CharacterName && c.WorldServer == charLog.Character.WorldServer);
+                dbParse.CharacterLogs.Add(CharacterLogRequest.convertToDbModel(charLog, dbParse, charLogChar));
+            }
+
+            await _logContext.LogParse.AddAsync(dbParse);
+            await _logContext.SaveChangesAsync();
+
+            return new LogParseApiView(dbParse);
         }
     }
 }

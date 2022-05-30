@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TraineeProject.Models;
+using TraineeProject.Models.Request;
 
 namespace TraineeProject.Repository
 {
@@ -14,5 +15,7 @@ namespace TraineeProject.Repository
 
         public Task<IEnumerable<T>> GetAllParsesByCharacterId(int characterId);
         public Task<T> GetParseById(int id);
+
+        public Task<T> AddParse(LogParseRequest parse);
     }
 }

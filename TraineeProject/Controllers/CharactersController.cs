@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
-using Microsoft.EntityFrameworkCore;
-using TraineeProject.Database;
 using TraineeProject.Models;
+using TraineeProject.Models.Request;
 using TraineeProject.Models.Views;
 using TraineeProject.Repository;
 
@@ -86,14 +83,21 @@ namespace TraineeProject.Controllers
         // POST: api/Character
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        // [HttpPost]
-        // public async Task<ActionResult<Character>> PostCharacterFFXIV(Character characterFFXIV)
-        // {
-        //     _context.Character.Add(characterFFXIV);
-        //     await _context.SaveChangesAsync();
-        //
-        //     return CreatedAtAction("GetCharacter", new { id = characterFFXIV.Id }, characterFFXIV);
-        // }
+         [HttpPost]
+         public async Task<ActionResult<Character>> PostCharacterFFXIV(CharacterRequest characterFFXIV)
+         {
+            CharacterApiView ret = null;
+            try
+            {
+                ret = await _repository.AddCharacter(characterFFXIV);
+            }
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
+
+            return ret == null ? new ConflictResult() : CreatedAtAction("GetCharacter", new { id = ret.Id }, ret);
+        }
 
         // DELETE: api/Character/5
         /*[HttpDelete("{id}")]
