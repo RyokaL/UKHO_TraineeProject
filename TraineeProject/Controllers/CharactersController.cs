@@ -29,6 +29,13 @@ namespace TraineeProject.Controllers
             return characters.ToList();
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<CharacterApiView>>> GetCharactersByUserId(string userId)
+        {
+            IEnumerable<CharacterApiView> characters = await _repository.GetCharactersForUserId(userId);
+            return characters.ToList();
+        }
+
         // GET: api/Character/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterApiView>> GetCharacter(int id)
@@ -51,39 +58,16 @@ namespace TraineeProject.Controllers
         // PUT: api/character/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        /*[HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacterFFXIV(int id, Character characterFFXIV)
+        [HttpPut]
+        public async Task<IActionResult> PutCharacterFFXIV(CharacterRequest characterFFXIV)
         {
-            if (id != characterFFXIV.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(characterFFXIV).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CharacterFFXIVExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }*/
+            return await _repository.AddUserIdToCharacter(characterFFXIV) == null ? BadRequest() : Ok(); 
+        }
 
         // POST: api/Character
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-         [HttpPost]
+        [HttpPost]
          public async Task<ActionResult<Character>> PostCharacterFFXIV(CharacterRequest characterFFXIV)
          {
             CharacterApiView ret = null;

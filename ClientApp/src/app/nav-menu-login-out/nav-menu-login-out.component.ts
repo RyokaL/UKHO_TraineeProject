@@ -7,7 +7,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-nav-menu-login-out',
   templateUrl: './nav-menu-login-out.component.html',
-  styleUrls: ['./nav-menu-login-out.component.css']
+  styleUrls: ['./nav-menu-login-out.component.scss']
 })
 export class NavMenuLoginOutComponent implements OnInit, OnDestroy {
 

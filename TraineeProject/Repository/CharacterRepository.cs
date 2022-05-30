@@ -32,6 +32,24 @@ namespace TraineeProject.Repository
             return null;
         }
 
+        public async Task<IEnumerable<CharacterApiView>> GetCharactersForUserId(string userId)
+        {
+            return await _logContext.Character.Where(c => c.UserId == userId).Select(c => new CharacterApiView(c)).ToListAsync();
+        }
+
+        public async Task<CharacterApiView> AddUserIdToCharacter(CharacterRequest character)
+        {
+            Character exists = await _logContext.Character.FirstOrDefaultAsync(c => c.CharacterName == character.CharacterName && c.WorldServer == character.WorldServer);
+            if(exists != null)
+            {
+                exists.UserId = character.UserId;
+                await _logContext.SaveChangesAsync();
+                return new CharacterApiView(exists);
+            }
+
+            return null;
+        }
+
         public async Task<IEnumerable<CharacterApiView>> GetAllCharacters()
         {
             var characters = await _logContext.Character.ToListAsync();

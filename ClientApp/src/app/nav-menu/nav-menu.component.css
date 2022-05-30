@@ -16,3 +16,8 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+li {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}

@@ -4,7 +4,7 @@
     {
         public string CharacterName { get; set; }
         public string WorldServer { get; set; }
-        public int? UserId { get; set; }
+        public string? UserId { get; set; }
         public bool? Private { get; set; }
 
         public static Character convertToDbModel(CharacterRequest character)

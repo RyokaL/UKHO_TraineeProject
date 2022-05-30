@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -15,6 +15,7 @@ import { NavMenuLoginOutComponent } from './nav-menu-login-out/nav-menu-login-ou
 
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
 import { MsalGuard, MsalBroadcastService, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 //Config options for Azure B2C, had to assume based on a few tutorials but seems to work
 export const b2cPolicies = {
@@ -79,7 +80,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     FetchDataComponent,
     CharInfoComponent,
     ParseLogComponent,
-    NavMenuLoginOutComponent
+    NavMenuLoginOutComponent,
+    UserProfileComponent
   ],
   //Dependency injection section - provides instances to other components that ask for it
   imports: [
@@ -87,12 +89,14 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     HttpClientModule,
     MsalModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'characters', component: CharInfoComponent },
       { path: 'characters/:id/parses', component: ParseLogComponent },
+      { path: 'profile', component: UserProfileComponent, canActivate: [MsalGuard] }
     ])
   ],
   //If a component asks for a data structure, provide the function that will give it

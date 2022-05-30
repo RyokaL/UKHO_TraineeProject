@@ -1,2 +1,9 @@
-<a class="nav-link text-dark" *ngIf="!loggedIn" (click)="login()">Login</a>
-<a class="nav-link text-dark" *ngIf="loggedIn" (click)="logout()">Logout</a>
+<li class="nav-item" *ngIf="!loggedIn">
+    <a class="nav-link text-dark link" (click)="login()">Login</a>
+</li>
+<li class="nav-item" *ngIf="loggedIn">
+    <a class="nav-link text-dark link" [routerLink]="['/profile']">Profile</a>
+</li>
+<li class="nav-item" *ngIf="loggedIn">
+    <a class="nav-link text-dark link" (click)="logout()">Logout</a>
+</li>

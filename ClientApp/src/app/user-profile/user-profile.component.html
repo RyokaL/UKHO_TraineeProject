@@ -1,0 +1,30 @@
+<p>Add Your Character</p>
+<p *ngIf="error">That character doesn't exist!</p>
+<form [formGroup]="addCharacterForm" (ngSubmit)="onSubmit()">
+    <input type="text" formControlName="charName" placeholder="Character Name">
+    <input type="text" formControlName="worldServer" placeholder="World Server">
+    <input type="submit" value="Submit">
+</form>
+
+<h1 id="tableLabel">Character List</h1>
+
+<p>List of all characters.</p>
+
+<p *ngIf="!characters"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="characters">
+  <thead>
+  <tr>
+    <th>Character Name</th>
+    <th>World Server</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let character of characters">
+    <td>{{ character.characterName }}</td>
+    <td>{{ character.worldServer }}</td>
+    <td><a href ="{{ baseUrl }}/characters/{{ character.id }}/parses">All Logs</a></td>
+  </tr>
+  </tbody>
+</table>

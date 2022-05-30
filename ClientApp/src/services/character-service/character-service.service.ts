@@ -21,11 +21,26 @@ export class CharacterService {
         );
   }
 
+  getCharactersByUserId(userId: string): Observable<CharacterInfo[]> {
+    return this.http.get<CharacterInfo[]>(this.baseUrl + 'api/character/user/' + userId)
+    .pipe(
+      catchError(this.handleError<CharacterInfo[]>())
+    );
+  }
+
   getCharacterById(id: number): Observable<CharacterInfo> {
     return this.http.get<CharacterInfo>(this.baseUrl + 'api/character/' + id)
       .pipe(
         catchError(this.handleError<CharacterInfo>())
       );
+  }
+
+  addUserToCharacter(character: CharacterInfoReq, userId: string): boolean {
+    this.http.put<any>(this.baseUrl + 'api/character', { character, userId: userId }, {observe: 'response'})
+      .subscribe(response => {
+        return response.ok
+      });
+    return false;
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -41,4 +56,9 @@ export interface CharacterInfo {
   id: number;
   characterName: string;
   worldServer: string;
+}
+
+export interface CharacterInfoReq {
+  characterName: string,
+  worldServer: string
 }
