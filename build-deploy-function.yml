@@ -32,8 +32,9 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'publish'
-    arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/function_app'
+    command: 'build'
+    projects: 'TraineProject.FunctionApp/**/*.csproj'
+    arguments: '--output $(System.DefaultWorkingDirectory)/function_app'
 
 - task: AzureFunctionApp@1
   displayName: 'Azure functions app deploy'
@@ -41,4 +42,4 @@ steps:
     azureSubscription: '$(azureSubscription)'
     appType: functionApp
     appName: $(functionAppName)
-    package: '$(System.DefaultWorkingDirectory)/function_app/*.zip'
+    package: '$(System.DefaultWorkingDirectory)/function_app/'
