@@ -42,4 +42,4 @@ steps:
     azureSubscription: '$(azureSubscription)'
     appType: functionApp
     appName: $(functionAppName)
-    package: '$(System.DefaultWorkingDirectory)/function_app/*.zip'
+    package: '$(System.DefaultWorkingDirectory)/function_app/'
