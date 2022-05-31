@@ -2,10 +2,10 @@
 {
     public class CharacterApiView
     {
-        public CharacterApiView(Character character)
+        public CharacterApiView(Character character, string userId = "")
         {
             Id = character.Id;
-            if (character.Private)
+            if (character.Private && userId != character.UserId)
             {
                 CharacterName = "Anonymous";
                 WorldServer = "Private";

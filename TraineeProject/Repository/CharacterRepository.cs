@@ -34,7 +34,7 @@ namespace TraineeProject.Repository
 
         public async Task<IEnumerable<CharacterApiView>> GetCharactersForUserId(string userId)
         {
-            return await _logContext.Character.Where(c => c.UserId == userId).Select(c => new CharacterApiView(c)).ToListAsync();
+            return await _logContext.Character.Where(c => c.UserId == userId).Select(c => new CharacterApiView(c, userId)).ToListAsync();
         }
 
         public async Task<CharacterApiView> UpdateCharacterPrivacy(CharacterRequest character)
@@ -43,8 +43,8 @@ namespace TraineeProject.Repository
             if (exists != null)
             {
 
-                exists.Private = character.Private ?? false;
-                await _logContext.SaveChangesAsync();
+                    exists.Private = character.Private ?? false;
+                    await _logContext.SaveChangesAsync();
 
                 return new CharacterApiView(exists);
             }
