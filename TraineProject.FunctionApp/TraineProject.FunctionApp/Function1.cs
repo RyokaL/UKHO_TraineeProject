@@ -17,7 +17,13 @@ namespace TraineProject.FunctionApp
 
         public void ProcessLog(Stream log)
         {
-            
+          using(var reader = new StreamReader(log)) {
+                string line = "";
+                while((line = reader.ReadLine()) != null)
+                {
+
+                } 
+          }  
         }
     }
 }
