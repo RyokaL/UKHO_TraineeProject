@@ -14,11 +14,13 @@
             {
                 CharacterName = character.CharacterName;
                 WorldServer = character.WorldServer;
+                Private = character.Private;
             }
         }
 
         public int Id { get; set; }
         public string CharacterName { get; set; }
         public string WorldServer { get; set; }
+        public bool? Private { get; set; }
     }
 }
