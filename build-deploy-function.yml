@@ -33,7 +33,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: 'TraineProject.FunctionApp/*.csproj'
+    projects: 'TraineProject.FunctionApp/**/*.csproj'
     arguments: '--output $(System.DefaultWorkingDirectory)/function_app'
 
 - task: AzureFunctionApp@1
