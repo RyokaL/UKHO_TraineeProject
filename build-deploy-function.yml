@@ -32,9 +32,9 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'publish'
+    command: 'build'
     projects: 'TraineProject.FunctionApp/*.csproj'
-    arguments: --output $(System.DefaultWorkingDirectory)/function_app'
+    arguments: '--output $(System.DefaultWorkingDirectory)/function_app'
 
 - task: AzureFunctionApp@1
   displayName: 'Azure functions app deploy'
