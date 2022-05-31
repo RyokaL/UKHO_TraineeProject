@@ -32,7 +32,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   setPrivacy(event, character: CharacterInfo): void {
-    console.log(event);
     this.charService.updatePrivacy({characterName: character.characterName, worldServer: character.worldServer}, event.target.checked);
   }
 

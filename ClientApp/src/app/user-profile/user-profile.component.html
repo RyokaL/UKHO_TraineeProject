@@ -26,7 +26,7 @@
     <td>{{ character.characterName }}</td>
     <td>{{ character.worldServer }}</td>
     <td><a href ="{{ baseUrl }}/characters/{{ character.id }}/parses">All Logs</a></td>
-    <td><input type="checkbox" [value]="character.Private" (change)="setPrivacy($event, character)"></td>
+    <td><input type="checkbox" [checked]="character.private" (change)="setPrivacy($event, character)"></td>
   </tr>
   </tbody>
 </table>

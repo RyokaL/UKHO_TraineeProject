@@ -64,6 +64,7 @@ export interface CharacterInfo {
   id: number;
   characterName: string;
   worldServer: string;
+  private: boolean;
 }
 
 export interface CharacterInfoReq {
