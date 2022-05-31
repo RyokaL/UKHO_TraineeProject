@@ -8,12 +8,14 @@ trigger:
       - ClientApp/**
       - build-deploy-database.yml
       - build-deploy-ui.yml
+      - TraineProject.FunctionApp/**
+      - build-deploy-function.yml
 
 pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: '*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 steps:

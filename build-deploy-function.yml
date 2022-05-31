@@ -1,0 +1,44 @@
+trigger:
+  branches:
+    include:
+        - main
+  paths:
+    include:
+        - TraineProject.FunctionApp/**
+        - build-deploy-function.yml
+
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: 'TraineProject.FunctionApp/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '89792dac-8f91-4b45-8ecf-0d367cc71c92'
+
+  # Function app name
+  functionAppName: 'calumdbtraineeprojectfunction'
+
+  # Agent VM image name
+  vmImageName: 'windows-2019'
+steps:
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    arguments: '--configuration $(buildConfiguration) --output $(System.DefaultWorkingDirectory)/function_app'
+
+- task: AzureFunctionApp@1
+  displayName: 'Azure functions app deploy'
+  inputs:
+    azureSubscription: '$(azureSubscription)'
+    appType: functionApp
+    appName: $(functionAppName)
+    package: '$(System.DefaultWorkingDirectory)/function_app/*.zip'
