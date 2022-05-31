@@ -43,6 +43,14 @@ export class CharacterService {
     return false;
   }
 
+  updatePrivacy(character: CharacterInfoReq, privacy: boolean): boolean {
+    this.http.put<any>(this.baseUrl + 'api/character/user/private', { characterName: character.characterName, worldServer: character.worldServer, private: privacy }, {observe: 'response'})
+      .subscribe(response => {
+        return response.ok
+      });
+    return false;
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

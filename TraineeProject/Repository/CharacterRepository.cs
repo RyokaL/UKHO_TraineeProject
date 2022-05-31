@@ -37,12 +37,30 @@ namespace TraineeProject.Repository
             return await _logContext.Character.Where(c => c.UserId == userId).Select(c => new CharacterApiView(c)).ToListAsync();
         }
 
+        public async Task<CharacterApiView> UpdateCharacterPrivacy(CharacterRequest character)
+        {
+            Character exists = await _logContext.Character.FirstOrDefaultAsync(c => c.CharacterName == character.CharacterName && c.WorldServer == character.WorldServer);
+            if (exists != null)
+            {
+
+                exists.Private = character.Private ?? false;
+                await _logContext.SaveChangesAsync();
+
+                return new CharacterApiView(exists);
+            }
+
+            return null;
+        }
+
         public async Task<CharacterApiView> AddUserIdToCharacter(CharacterRequest character)
         {
             Character exists = await _logContext.Character.FirstOrDefaultAsync(c => c.CharacterName == character.CharacterName && c.WorldServer == character.WorldServer);
             if(exists != null)
             {
-                exists.UserId = character.UserId;
+                if(exists.UserId == null)
+                {
+                    return null;
+                }
                 await _logContext.SaveChangesAsync();
                 return new CharacterApiView(exists);
             }

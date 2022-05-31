@@ -31,7 +31,13 @@ export class UserProfileComponent implements OnInit {
     this.addCharacterForm.reset();
   }
 
+  setPrivacy(event, character: CharacterInfo): void {
+    console.log(event);
+    this.charService.updatePrivacy({characterName: character.characterName, worldServer: character.worldServer}, event.target.checked);
+  }
+
   ngOnInit(): void {
     this.charService.getCharactersByUserId(this.authService.instance.getAllAccounts()[0].localAccountId).subscribe(result => this.characters = result);
   }
 }
+
