@@ -42,13 +42,13 @@ steps:
   inputs:
     command: 'build'
     projects: 'TraineProject.FunctionApp/**/*.csproj'
-    arguments: '--output $(System.DefaultWorkingDirectory)/function_app'
+    arguments: '--output $(System.DefaultWorkingDirectory)/function_app/'
     
 - task: FileTransform@1
   inputs:
-    folderPath: '$(System.DefaultWorkingDirectory)/function_app/*.zip'
+    folderPath: '$(System.DefaultWorkingDirectory)/function_app/'
     fileType: 'json'
-    targetFiles: '*.json'
+    targetFiles: '**/host.json'
 
 - task: AzureFunctionApp@1
   displayName: 'Azure functions app deploy'
