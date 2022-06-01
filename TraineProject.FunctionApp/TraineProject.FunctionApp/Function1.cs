@@ -127,6 +127,7 @@ namespace TraineProject.FunctionApp
         {
             logParse.TimeTaken = (int)((finish.Subtract(start)).TotalSeconds);
             logParse.Succeeded = success;
+            logParse.DateUploaded = DateTime.Now;
             logParse.CharacterLogs = new List<CharacterLog>();
 
             foreach(CharacterStats c in list.Values)
