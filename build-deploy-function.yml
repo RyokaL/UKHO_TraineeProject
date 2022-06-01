@@ -38,17 +38,17 @@ steps:
     packageType: 'sdk'
     version: '6.x'
 
-- task: FileTransform@1
-  inputs:
-    folderPath: '$(System.DefaultWorkingDirectory)/**/*'
-    fileType: 'json'
-    targetFiles: '*.json'
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     projects: 'TraineProject.FunctionApp/**/*.csproj'
     arguments: '--output $(System.DefaultWorkingDirectory)/function_app'
+    
+- task: FileTransform@1
+  inputs:
+    folderPath: '$(System.DefaultWorkingDirectory)/function_app/*'
+    fileType: 'json'
+    targetFiles: '*.json'
 
 - task: AzureFunctionApp@1
   displayName: 'Azure functions app deploy'
