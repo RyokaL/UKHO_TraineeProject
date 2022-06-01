@@ -17,6 +17,9 @@ using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Data.SqlClient;
+using Azure.Storage.Blobs;
+
+using Microsoft.Extensions.Azure;
 
 namespace TraineeProject
 {
@@ -52,6 +55,15 @@ namespace TraineeProject
                     secretClientOptions);
 
                 KeyVaultSecret sqlSecret = client.GetSecret("SQLLogDbPass");
+                KeyVaultSecret storageAccountConnection = client.GetSecret("StorageAccountConnectionString");
+
+                services.AddAzureClients(builder =>
+                {
+                    builder.AddBlobServiceClient(storageAccountConnection.Value);
+                });
+
+                BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccountConnection.Value);
+                BlobContainerClient cotainterClient = blobServiceClient.GetBlobContainerClient("traineeprojectblobstorage");
 
                 var sqlBuilder = new SqlConnectionStringBuilder
                 {
@@ -73,7 +85,6 @@ namespace TraineeProject
                     options.UseSqlServer(Configuration.GetConnectionString("TraineeSQLDbLocal"));
                 });
             }
-            
 
             services.AddControllersWithViews();
 

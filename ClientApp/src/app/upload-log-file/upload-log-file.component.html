@@ -1,0 +1,4 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
+    <input type="file" name="logFile" (change)="onFileChanged($event)">
+    <button type="submit">Upload</button>
+</form>

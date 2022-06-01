@@ -16,6 +16,7 @@ import { NavMenuLoginOutComponent } from './nav-menu-login-out/nav-menu-login-ou
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
 import { MsalGuard, MsalBroadcastService, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UploadLogFileComponent } from './upload-log-file/upload-log-file.component';
 
 //Config options for Azure B2C, had to assume based on a few tutorials but seems to work
 export const b2cPolicies = {
@@ -81,7 +82,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     CharInfoComponent,
     ParseLogComponent,
     NavMenuLoginOutComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    UploadLogFileComponent
   ],
   //Dependency injection section - provides instances to other components that ask for it
   imports: [
