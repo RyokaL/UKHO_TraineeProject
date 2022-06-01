@@ -29,7 +29,7 @@ namespace TraineProject.FunctionApp
     public class Function1
     {
         [FunctionName("Function1")]
-        public void Run([BlobTrigger("traineeprojectblobstorage/{name}", Connection = "StorageAccountConnectionFunctionApp")]Stream myBlob, string name, ILogger log)
+        public void Run([BlobTrigger("traineeprojectblobstorage/{name}", Connection = "StorageAccountConnection")]Stream myBlob, string name, ILogger log)
         {
             log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
             ProcessLog(myBlob, log);
