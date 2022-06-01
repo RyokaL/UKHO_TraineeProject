@@ -119,7 +119,7 @@ namespace TraineProject.FunctionApp
             }
         }
 
-        public void FinaliseLog(IDictionary<string, CharacterStats> list,
+        public async void FinaliseLog(IDictionary<string, CharacterStats> list,
                                 bool success,
                                 LogParse logParse,
                                 DateTime start,
@@ -150,7 +150,9 @@ namespace TraineProject.FunctionApp
 
             using(HttpClient http = new HttpClient())
             {
-                http.PostAsJsonAsync("https://calumdbtraineeproject.azurewebsites.net/api/parse", logParse);
+                var response = await http.PostAsJsonAsync("https://calumdbtraineeproject.azurewebsites.net/api/parse", logParse);
+                var respContent = await response.Content.ReadAsStringAsync();
+                //Could be used for logging
             }
         }
 
