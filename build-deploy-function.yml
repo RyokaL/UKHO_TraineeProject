@@ -12,23 +12,37 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: 'TraineProject.FunctionApp/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  - name: "solution" 
+    value: 'TraineProject.FunctionApp/*.sln'
+  - name: "buildPlatform"
+    value: 'Any CPU'
+  - name: "buildConfiguration"
+    value: 'Release'
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '89792dac-8f91-4b45-8ecf-0d367cc71c92'
+  - name: "azureSubscription"
+    value: '89792dac-8f91-4b45-8ecf-0d367cc71c92'
 
   # Function app name
-  functionAppName: 'calumdbtraineeprojectfunction'
+  - name: "functionAppName" 
+    value: 'calumdbtraineeprojectfunction'
 
   # Agent VM image name
-  vmImageName: 'windows-2019'
+  - name: "vmImageName"
+    value: 'windows-2019'
+
+  - group: Pipeline-Variables
 steps:
 
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
     version: '6.x'
+
+- task: FileTransform@1
+  inputs:
+    folderPath: '$(System.DefaultWorkingDirectory)/**/*'
+    fileType: 'json'
+    targetFiles: '*.json'
 
 - task: DotNetCoreCLI@2
   inputs:
