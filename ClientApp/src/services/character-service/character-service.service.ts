@@ -10,33 +10,33 @@ import { API_URL } from 'src/app/app.api';
 export class CharacterService {
 
   
-  constructor(private http: HttpClient, @Inject(API_URL) private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject(API_URL) private apiUrl: string) {
 
   }
 
   getCharacterInfo(): Observable<CharacterInfo[]> {
-    return this.http.get<CharacterInfo[]>(this.baseUrl + 'api/character')
+    return this.http.get<CharacterInfo[]>(this.apiUrl + 'api/character')
       .pipe(
         catchError(this.handleError<CharacterInfo[]>())
         );
   }
 
   getCharactersByUserId(userId: string): Observable<CharacterInfo[]> {
-    return this.http.get<CharacterInfo[]>(this.baseUrl + 'api/character/user/' + userId)
+    return this.http.get<CharacterInfo[]>(this.apiUrl + 'api/character/user/' + userId)
     .pipe(
       catchError(this.handleError<CharacterInfo[]>())
     );
   }
 
   getCharacterById(id: number): Observable<CharacterInfo> {
-    return this.http.get<CharacterInfo>(this.baseUrl + 'api/character/' + id)
+    return this.http.get<CharacterInfo>(this.apiUrl + 'api/character/' + id)
       .pipe(
         catchError(this.handleError<CharacterInfo>())
       );
   }
 
   addUserToCharacter(character: CharacterInfoReq, userId: string): boolean {
-    this.http.put<any>(this.baseUrl + 'api/character', { characterName: character.characterName, worldServer: character.worldServer, userId: userId }, {observe: 'response'})
+    this.http.put<any>(this.apiUrl + 'api/character', { characterName: character.characterName, worldServer: character.worldServer, userId: userId }, {observe: 'response'})
       .subscribe(response => {
         return response.ok
       });
@@ -44,7 +44,7 @@ export class CharacterService {
   }
 
   updatePrivacy(character: CharacterInfoReq, privacy: boolean): boolean {
-    this.http.put<any>(this.baseUrl + 'api/character/user/private', { characterName: character.characterName, worldServer: character.worldServer, private: privacy }, {observe: 'response'})
+    this.http.put<any>(this.apiUrl + 'api/character/user/private', { characterName: character.characterName, worldServer: character.worldServer, private: privacy }, {observe: 'response'})
       .subscribe(response => {
         return response.ok
       });

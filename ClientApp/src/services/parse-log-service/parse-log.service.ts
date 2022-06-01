@@ -11,12 +11,12 @@ import { API_URL } from 'src/app/app.api';
 export class ParseLogService {
 
 
-  constructor(private http: HttpClient, @Inject(API_URL) private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject(API_URL) private apiUrl: string) {
 
   }
 
   getLogsForCharacter(id: number): Observable<LogParse[]> {
-    return this.http.get<LogParse[]>(this.baseUrl + 'api/parse/character/' + id)
+    return this.http.get<LogParse[]>(this.apiUrl + 'api/parse/character/' + id)
       .pipe(
         catchError(this.handleError<LogParse[]>())
       );
