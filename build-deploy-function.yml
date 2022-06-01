@@ -46,7 +46,7 @@ steps:
     
 - task: FileTransform@1
   inputs:
-    folderPath: '$(System.DefaultWorkingDirectory)/function_app/*'
+    folderPath: '$(System.DefaultWorkingDirectory)/function_app/*.zip'
     fileType: 'json'
     targetFiles: '*.json'
 
