@@ -22,7 +22,9 @@ export class UploadLogFileComponent implements OnInit {
   onFileChanged(event): void {
     const file: File = event.target.files[0];
     if(file) {
-      this.logUploadService.uploadFileToApi(file).subscribe()
+      const formData = new FormData();
+      formData.append("logFile", file);
+      this.logUploadService.uploadFileToApi(formData).subscribe()
     }
   }
 
