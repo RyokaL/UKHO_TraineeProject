@@ -17,7 +17,7 @@ namespace TraineeProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> uploadLog([FromForm] IFormFile file)
+        public async Task<IActionResult> uploadLog(IFormFile file)
         {
             if(file.Length > 0)
             {
