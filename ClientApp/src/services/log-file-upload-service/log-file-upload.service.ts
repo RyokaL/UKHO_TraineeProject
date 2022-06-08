@@ -9,7 +9,7 @@ export class LogFileUploadService {
 
   constructor(private http: HttpClient, @Inject(API_URL) private apiUrl: string) { }
 
-  uploadFileToApi(file: File) {
-    return this.http.post(this.apiUrl + "api/log-upload", file)
+  uploadFileToApi(file: FormData) {
+    return this.http.post(this.apiUrl + "api/log-upload", file);
   }
 }

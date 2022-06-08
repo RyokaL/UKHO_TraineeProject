@@ -17,7 +17,7 @@ namespace TraineeProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> uploadLog([FromBody] IFormFile file)
+        public async Task<IActionResult> uploadLog([FromForm] IFormFile file)
         {
             if(file.Length > 0)
             {
@@ -25,6 +25,7 @@ namespace TraineeProject.Controllers
                 {
                     await file.CopyToAsync(memStream);
                     var containerClient = this.blobServiceClient.GetBlobContainerClient("traineeprojectblobstorage");
+                    memStream.Position = 0;
                     containerClient.UploadBlob(Path.GetRandomFileName(), memStream);
                     return Ok();
                 }

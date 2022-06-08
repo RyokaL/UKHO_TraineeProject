@@ -35,32 +35,33 @@ namespace TraineeProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            if (Configuration.GetValue<string>("UseLocalSqlServer") == null)
+            var secretClientOptions = new SecretClientOptions()
             {
-
-                var secretClientOptions = new SecretClientOptions()
-                {
-                    Retry =
+                Retry =
                     {
                         Delay = TimeSpan.FromSeconds(2),
                         MaxDelay = TimeSpan.FromSeconds(16),
                         MaxRetries = 5,
                         Mode = RetryMode.Exponential
                     }
-                };
+            };
 
-                var client = new SecretClient(new Uri("https://cdbtrainee.vault.azure.net/"),
-                    new DefaultAzureCredential(new DefaultAzureCredentialOptions {ExcludeVisualStudioCredential = false}),
-                    secretClientOptions);
+            var client = new SecretClient(new Uri("https://cdbtrainee.vault.azure.net/"),
+                new DefaultAzureCredential(new DefaultAzureCredentialOptions { ExcludeVisualStudioCredential = false }),
+                secretClientOptions);
+
+            KeyVaultSecret storageAccountConnection = client.GetSecret("StorageAccountConnectionString");
+
+            services.AddAzureClients(builder =>
+            {
+                builder.AddBlobServiceClient(storageAccountConnection.Value);
+            });
+
+
+            if (Configuration.GetValue<string>("UseLocalSqlServer") == null)
+            {
 
                 KeyVaultSecret sqlSecret = client.GetSecret("SQLLogDbPass");
-                KeyVaultSecret storageAccountConnection = client.GetSecret("StorageAccountConnectionString");
-
-                services.AddAzureClients(builder =>
-                {
-                    builder.AddBlobServiceClient(storageAccountConnection.Value);
-                });
 
                 BlobServiceClient blobServiceClient = new BlobServiceClient(storageAccountConnection.Value);
                 BlobContainerClient cotainterClient = blobServiceClient.GetBlobContainerClient("traineeprojectblobstorage");
