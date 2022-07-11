@@ -20,6 +20,10 @@ using Microsoft.Data.SqlClient;
 using Azure.Storage.Blobs;
 
 using Microsoft.Extensions.Azure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace TraineeProject
 {
@@ -57,7 +61,6 @@ namespace TraineeProject
                 builder.AddBlobServiceClient(storageAccountConnection.Value);
             });
 
-
             if (Configuration.GetValue<string>("UseLocalSqlServer") == null)
             {
 
@@ -87,10 +90,16 @@ namespace TraineeProject
                 });
             }
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
+            //services.AddMicrosoftIdentityWebApiAuthentication(Configuration, "AzureAdB2C");
+
             services.AddControllersWithViews();
 
             services.AddScoped<ICharacterRepository<CharacterApiView>, CharacterRepository>();
             services.AddScoped<IParseRepository<LogParseApiView>, ParseRepository>();
+            IdentityModelEventSource.ShowPII = true;
+            services.AddOptions();
+            services.Configure<OpenIdConnectOptions>(Configuration.GetSection("AzureAdB2C"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,10 +121,16 @@ namespace TraineeProject
 
             app.UseCors((builder) =>
             {
-                builder.WithOrigins("http://localhost:4200/", "https://happy-mushroom-038ec4503.1.azurestaticapps.net/");
+                builder.WithOrigins("http://localhost:4200", "https://happy-mushroom-038ec4503.1.azurestaticapps.net/");
+                builder.AllowCredentials();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

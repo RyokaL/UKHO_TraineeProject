@@ -27,7 +27,7 @@ export class UserProfileComponent implements OnInit {
   });
 
   onSubmit(): void {
-    this.error = this.charService.addUserToCharacter(this.addCharacterForm.value as CharacterInfoReq, this.authService.instance.getAllAccounts()[0].localAccountId);
+    this.error = this.charService.addUserToCharacter(this.addCharacterForm.value as CharacterInfoReq);
     this.addCharacterForm.reset();
   }
 
@@ -36,7 +36,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.charService.getCharactersByUserId(this.authService.instance.getAllAccounts()[0].localAccountId).subscribe(result => this.characters = result);
+    this.charService.getCharactersByUserId().subscribe(result => this.characters = result);
   }
 }
 

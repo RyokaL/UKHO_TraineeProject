@@ -17,26 +17,29 @@ export class CharacterService {
   getCharacterInfo(): Observable<CharacterInfo[]> {
     return this.http.get<CharacterInfo[]>(this.apiUrl + 'api/character')
       .pipe(
-        catchError(this.handleError<CharacterInfo[]>())
-        );
+        catchError((err, _) => {
+          console.log(err)
+          return this.handleError<CharacterInfo[]>()
+        })
+      );
   }
 
-  getCharactersByUserId(userId: string): Observable<CharacterInfo[]> {
-    return this.http.get<CharacterInfo[]>(this.apiUrl + 'api/character/user/' + userId)
+  getCharactersByUserId(): Observable<CharacterInfo[]> {
+    return this.http.get<CharacterInfo[]>(this.apiUrl + 'api/character/user')
     .pipe(
-      catchError(this.handleError<CharacterInfo[]>())
+      catchError((err, _) => this.handleError<CharacterInfo[]>())
     );
   }
 
   getCharacterById(id: number): Observable<CharacterInfo> {
     return this.http.get<CharacterInfo>(this.apiUrl + 'api/character/' + id)
       .pipe(
-        catchError(this.handleError<CharacterInfo>())
+        catchError((err, _) => this.handleError<CharacterInfo>())
       );
   }
 
-  addUserToCharacter(character: CharacterInfoReq, userId: string): boolean {
-    this.http.put<any>(this.apiUrl + 'api/character', { characterName: character.characterName, worldServer: character.worldServer, userId: userId }, {observe: 'response'})
+  addUserToCharacter(character: CharacterInfoReq): boolean {
+    this.http.put<any>(this.apiUrl + 'api/character', { characterName: character.characterName, worldServer: character.worldServer }, {observe: 'response'})
       .subscribe(response => {
         return response.ok
       });
@@ -52,11 +55,8 @@ export class CharacterService {
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
       // Let the app keep running by returning an empty result.
       return of(result as T);
-    };
   }
 }
 

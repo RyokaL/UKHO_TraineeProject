@@ -16,7 +16,7 @@ namespace TraineeProject.Repository
 
         public Task<T> AddCharacter(CharacterRequest character);
 
-        public Task<T> AddUserIdToCharacter(CharacterRequest character);
+        public Task<T> AddUserIdToCharacter(CharacterRequest character, string userId);
         public Task<T> UpdateCharacterPrivacy(CharacterRequest character);
 
         public Task<IEnumerable<T>> GetCharactersForUserId(string userId);

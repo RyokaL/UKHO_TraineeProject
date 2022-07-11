@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -12,7 +12,7 @@ import { ParseLogComponent } from './parse-log/parse-log.component';
 import { NavMenuLoginOutComponent } from './nav-menu-login-out/nav-menu-login-out.component';
 
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
-import { MsalGuard, MsalBroadcastService, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
+import { MsalGuard, MsalBroadcastService, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MsalGuardConfiguration, MsalRedirectComponent, MsalInterceptor, MsalInterceptorConfiguration, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UploadLogFileComponent } from './upload-log-file/upload-log-file.component';
 
@@ -69,6 +69,13 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   };
 }
 
+export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  return {
+    interactionType: InteractionType.Popup,
+    protectedResourceMap: new Map([["https://localhost:5001/api/character", ["https://ukhofflogs.onmicrosoft.com/294c86d0-147f-4d34-b6a5-013fe967b2f3/access_as_user"]]])
+  };
+}
+
 @NgModule({
   //Declares what components are available to Angular
   declarations: [
@@ -104,6 +111,15 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     {
       provide: MSAL_GUARD_CONFIG,
       useFactory: MSALGuardConfigFactory
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MsalInterceptorConfigFactory
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
     },
     MsalService,
     MsalGuard,

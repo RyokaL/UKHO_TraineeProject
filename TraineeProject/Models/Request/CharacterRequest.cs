@@ -4,7 +4,6 @@
     {
         public string CharacterName { get; set; }
         public string WorldServer { get; set; }
-        public string? UserId { get; set; }
         public bool? Private { get; set; }
 
         public static Character convertToDbModel(CharacterRequest character)
@@ -13,7 +12,6 @@
             {
                 CharacterName = character.CharacterName,
                 WorldServer = character.WorldServer,
-                UserId = character.UserId,
                 Private = character.Private ?? false
             };
         }

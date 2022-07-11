@@ -34,7 +34,8 @@ namespace TraineeProject.Repository
 
         public async Task<IEnumerable<CharacterApiView>> GetCharactersForUserId(string userId)
         {
-            return await _logContext.Character.Where(c => c.UserId == userId).Select(c => new CharacterApiView(c, userId)).ToListAsync();
+            var result = await _logContext.Character.Where(c => c.UserId == userId).Select(c => new CharacterApiView(c, userId)).ToListAsync();
+            return result;
         }
 
         public async Task<CharacterApiView> UpdateCharacterPrivacy(CharacterRequest character)
@@ -52,15 +53,16 @@ namespace TraineeProject.Repository
             return null;
         }
 
-        public async Task<CharacterApiView> AddUserIdToCharacter(CharacterRequest character)
+        public async Task<CharacterApiView> AddUserIdToCharacter(CharacterRequest character, string userId)
         {
             Character exists = await _logContext.Character.FirstOrDefaultAsync(c => c.CharacterName == character.CharacterName && c.WorldServer == character.WorldServer);
             if(exists != null)
             {
-                if(exists.UserId == null)
+                if(exists.UserId != null)
                 {
                     return null;
                 }
+                exists.UserId = userId;
                 await _logContext.SaveChangesAsync();
                 return new CharacterApiView(exists);
             }
