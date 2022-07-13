@@ -72,7 +72,10 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
   return {
     interactionType: InteractionType.Popup,
-    protectedResourceMap: new Map([["https://localhost:5001/api/character", ["https://ukhofflogs.onmicrosoft.com/294c86d0-147f-4d34-b6a5-013fe967b2f3/access_as_user"]]])
+    protectedResourceMap: new Map([["https://localhost:5001/api/character/user", 
+    ["https://ukhofflogs.onmicrosoft.com/294c86d0-147f-4d34-b6a5-013fe967b2f3/access_as_user"]],
+    ["https://calumdbtraineeproject.azurewebsites.net/api/character/user", 
+    ["https://ukhofflogs.onmicrosoft.com/294c86d0-147f-4d34-b6a5-013fe967b2f3/access_as_user"]]])
   };
 }
 
