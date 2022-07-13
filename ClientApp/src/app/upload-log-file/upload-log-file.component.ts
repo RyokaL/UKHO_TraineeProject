@@ -15,20 +15,28 @@ export class UploadLogFileComponent implements OnInit {
       LogFile: new FormControl([Validators.required])
   });
 
-  onSubmit(event): void {
-    
-  }
+  file: File = null;
+  fileUploaded = false;
 
-  onFileChanged(event): void {
-    const file: File = event.target.files[0];
-    if(file) {
+  onSubmit(event): void {
+    if(this.file) {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", this.file);
       this.logUploadService.uploadFileToApi(formData).subscribe();
+      this.file = null;
+      this.fileUploaded = true;
+      this.formGroup.reset();
     }
   }
 
+  onFileChanged(event): void {
+    this.fileUploaded = false;
+    this.file = event.target.files[0];
+  }
+
   ngOnInit(): void {
+    this.file = null;
+    this.fileUploaded = false;
   }
 
 }
