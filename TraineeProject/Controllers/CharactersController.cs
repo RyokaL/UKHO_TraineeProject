@@ -64,7 +64,7 @@ namespace TraineeProject.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [Authorize]
-        [HttpPut]
+        [HttpPut("user")]
         public async Task<IActionResult> PutCharacterFFXIV(CharacterRequest characterFFXIV)
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
