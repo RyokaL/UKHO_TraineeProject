@@ -40,4 +40,8 @@
     <Folder Include="Database\Interfaces\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="TraineeProject.Tests.Integration"/>
+	</ItemGroup>
+
 </Project>

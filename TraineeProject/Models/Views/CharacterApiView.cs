@@ -2,6 +2,8 @@
 {
     public class CharacterApiView
     {
+        public CharacterApiView() { }
+
         public CharacterApiView(Character character, string userId = "")
         {
             Id = character.Id;
